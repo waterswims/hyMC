@@ -7,7 +7,7 @@ public:
     double* thetas;
     double* phis;
     int N;
-    spin_lattice_1d(int length);
+    spin_lattice_1d(const int length);
     ~spin_lattice_1d();
 };
 

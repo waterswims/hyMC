@@ -1,7 +1,7 @@
 #include "../include/vector_trig.hpp"
 #include <cmath>
 
-void cos_1dvec(double* inp_vec, double* out_vec, int size)
+void cos_1dvec(const double* inp_vec, double* out_vec, const int size)
 {
     #pragma simd
     for(int i = 0; i < size; i++)
@@ -10,7 +10,7 @@ void cos_1dvec(double* inp_vec, double* out_vec, int size)
     }
 }
 
-void sin_1dvec(double* inp_vec, double* out_vec, int size)
+void sin_1dvec(const double* inp_vec, double* out_vec, const int size)
 {
     #pragma simd
     for(int i = 0; i < size; i++)
