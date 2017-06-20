@@ -1,4 +1,5 @@
 hymc.a
 tests/libs/*
+tests/test_files/double_save_test.cp
 objects/*
 runtests
