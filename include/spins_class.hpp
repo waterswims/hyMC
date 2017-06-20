@@ -9,6 +9,6 @@ public:
     int N;
     spin_lattice_1d(int length);
     ~spin_lattice_1d();
-}
+};
 
 #endif

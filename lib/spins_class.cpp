@@ -3,13 +3,13 @@
 
 spin_lattice_1d::spin_lattice_1d(int length)
 {
-    thetas = alloc_1darr(length);
-    phis = alloc_1darr(length);
+    thetas = alloc_1darr<double>(length);
+    phis = alloc_1darr<double>(length);
     N = length;
 }
 
 spin_lattice_1d::~spin_lattice_1d()
 {
-    dealloc_1darr(thetas);
-    dealloc_1darr(phis);
+    dealloc_1darr<double>(thetas);
+    dealloc_1darr<double>(phis);
 }
