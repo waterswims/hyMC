@@ -1,0 +1,4 @@
+hymc.a
+tests/libs/*
+objects/*
+runtests
