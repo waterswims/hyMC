@@ -3,7 +3,7 @@
 #include "../include/vector_trig.hpp"
 #include "../include/spins_class.hpp"
 
-double exchange_1d(spin_lattice_1d &spins)
+double exchange_1d(const spin_lattice_1d &spins)
 {
     double* cos_theta = alloc_1darr<double>(spins.N);
     double* cos_phi = alloc_1darr<double>(spins.N);
@@ -26,6 +26,11 @@ double exchange_1d(spin_lattice_1d &spins)
         double t3 = sin_theta[i] * sin_phi[i] * sin_theta[right] * sin_phi[right];
         E -= t1 + t2 + t3;
     }
+
+    dealloc_1darr<double>(cos_theta);
+    dealloc_1darr<double>(cos_phi);
+    dealloc_1darr<double>(sin_theta);
+    dealloc_1darr<double>(sin_phi);
 
     return E;
 }

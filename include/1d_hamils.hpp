@@ -3,6 +3,6 @@
 
 #include "spins_class.hpp"
 
-double exchange_1d(spin_lattice_1d &spins);
+double exchange_1d(const spin_lattice_1d &spins);
 
 #endif
