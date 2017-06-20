@@ -13,8 +13,6 @@ using namespace std;
 // Non-test functions
 ///////////////////////////////////////////////////////
 
-const double pi = 3.141592653589793;
-
 mkl_irand st_rand_int(1e5, 1);
 mkl_drand st_rand_double(1e5, 2);
 mkl_lnrand rand_ln(0, 0.25, 1e5, 3);
