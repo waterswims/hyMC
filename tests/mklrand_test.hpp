@@ -1,8 +1,7 @@
 #ifndef _RANDNUMTEST
 #define _RANDNUMTEST
 
-#include "mklrand.hpp"
-#include "test_functions.hpp"
+#include "../include/mklrand.hpp"
 #include <gtest/gtest.h>
 #include <cmath>
 #include <string>
