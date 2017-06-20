@@ -1,4 +1,4 @@
-#include "mklrand.h"
+#include "mklrand.hpp"
 #include <iostream>
 
 using namespace std;
