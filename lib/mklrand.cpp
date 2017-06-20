@@ -1,4 +1,4 @@
-#include "mklrand.hpp"
+#include "../include/mklrand.hpp"
 
 mkl_drand::mkl_drand(int size, int seed)
 {

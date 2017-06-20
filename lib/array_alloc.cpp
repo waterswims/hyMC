@@ -1,4 +1,4 @@
-#include "array_alloc.hpp"
+#include "../include/array_alloc.hpp"
 #include <cstdlib>
 
 template <class T>

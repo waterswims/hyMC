@@ -1,5 +1,5 @@
-#include "spin_lattice_1d.hpp"
-#include "array_alloc.hpp"
+#include "../include/spins_class.hpp"
+#include "../include/array_alloc.hpp"
 
 spin_lattice_1d::spin_lattice_1d(int length)
 {
