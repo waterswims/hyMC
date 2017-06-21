@@ -116,3 +116,43 @@ void mkl_lnrand::change_seed(int seed)
 	vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
 	this->fill();
 }
+
+mkl_nrand::mkl_nrand(double m, double sdin, int size, int seed)
+{
+	mean = m;
+	sd = sdin;
+	arr_size = size;
+	curr = 0;
+	randarr = (double*)malloc(arr_size*sizeof(double));
+	vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
+	this -> fill();
+}
+
+mkl_nrand::~mkl_nrand()
+{
+	free(randarr);
+}
+
+double mkl_nrand::gen()
+{
+	double out = randarr[curr];
+	curr++;
+	if(curr >= arr_size)
+	{
+		this->fill();
+	}
+	return out;
+}
+
+void mkl_nrand::fill()
+{
+	curr = 0;
+	vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER2, stream, arr_size, randarr, mean, sd);
+}
+
+void mkl_nrand::change_seed(int seed)
+{
+	vslDeleteStream(&stream);
+	vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
+	this->fill();
+}

@@ -58,4 +58,17 @@ public:
 	void change_seed(int seed);
 };
 
+class mkl_nrand: public mkl_randbase
+{
+private:
+	double *randarr;
+	double mean, sd;
+
+public:
+	mkl_nrand(double m, double sdin, int size, int seed=1);
+	~mkl_nrand();
+	double gen();
+	void fill();
+	void change_seed(int seed);
+};
 #endif
