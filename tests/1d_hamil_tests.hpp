@@ -3,6 +3,7 @@
 
 #include "../include/1d_hamils.hpp"
 #include "../include/spins_class.hpp"
+#include "../include/array_alloc.hpp"
 #include <gtest/gtest.h>
 
 TEST(Hamiltonian_1d, exchange_alligned)
@@ -52,6 +53,37 @@ TEST(Hamiltonian_1d, kinetic)
         test_vels.phis[i] = -i + 4.6;
     }
     EXPECT_NEAR(kinetic_1d(test_vels), 300.34999999999997, 300.34999999999997*1e-15);
+}
+
+TEST(Hamiltonian_1d, total)
+{
+    int size = 3;
+    spin_lattice_1d test_spins(size);
+    test_spins.thetas[0] = 0.3;
+    test_spins.phis[0] = 2.3;
+    test_spins.thetas[1] = 1.6;
+    test_spins.phis[1] = 0.1;
+    test_spins.thetas[2] = 5.2;
+    test_spins.phis[2] = 1.1;
+
+    spin_lattice_1d test_vels(size);
+    test_vels.thetas[0] = 1.1;
+    test_vels.phis[0] = 0.2;
+    test_vels.thetas[1] = 2.1;
+    test_vels.phis[1] = 0.6;
+    test_vels.thetas[2] = -0.2;
+    test_vels.phis[2] = -1;
+
+    bool* E_flags = alloc_1darr<bool>(1);
+    E_flags[0] = true;
+    EXPECT_NEAR(total_energy_1d(test_spins, test_vels, E_flags),
+        3.9797579320028853, 3.9797579320028853*1e-15);
+
+    E_flags[0] = false;
+    EXPECT_NEAR(total_energy_1d(test_spins, test_vels, E_flags),
+        3.5300000000000002, 3.5300000000000002*1e-15);
+
+    dealloc_1darr<bool>(E_flags);
 }
 
 #endif

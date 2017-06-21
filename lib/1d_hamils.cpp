@@ -4,6 +4,22 @@
 #include "../include/spins_class.hpp"
 #include <cmath>
 
+double total_energy_1d(const spin_lattice_1d &spins,
+    const spin_lattice_1d &vels,
+    const bool* energy_flags)
+{
+    // Start with kinetic energy
+    double E = kinetic_1d(vels);
+
+    // Add Exchange
+    if (energy_flags[0])
+    {
+        E += exchange_1d(spins);
+    }
+
+    return E;
+}
+
 double exchange_1d(const spin_lattice_1d &spins)
 {
     double* cos_theta = alloc_1darr<double>(spins.N);
