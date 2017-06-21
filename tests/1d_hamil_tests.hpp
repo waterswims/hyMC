@@ -43,6 +43,27 @@ TEST(Hamiltonian_1d, exchange_specific)
     EXPECT_NEAR(exchange_1d(test_spins), 0.44975793200288505, 0.44975793200288505*1e-15);
 }
 
+TEST(Hamiltonian_1d, exchange_grad)
+{
+    int size = 3;
+    spin_lattice_1d test_spins(size);
+    test_spins.thetas[0] = 0.3;
+    test_spins.phis[0] = 2.3;
+    test_spins.thetas[1] = 1.6;
+    test_spins.phis[1] = 0.1;
+    test_spins.thetas[2] = 5.2;
+    test_spins.phis[2] = 1.1;
+
+    spin_lattice_1d grad(size);
+    exchange_grad_1d(test_spins, grad);
+    EXPECT_NEAR(grad.thetas[0], -0.58118303, 0.58118303*1e-7);
+    EXPECT_NEAR(grad.thetas[1], -0.11110539, 0.11110539*1e-7);
+    EXPECT_NEAR(grad.thetas[2], 0.69228842, 0.69228842*1e-7);
+    EXPECT_NEAR(grad.phis[0], -1.2087711, 1.2087711*1e-7);
+    EXPECT_NEAR(grad.phis[1], -0.57549375, 0.57549375*1e-7);
+    EXPECT_NEAR(grad.phis[2], -0.27048617, 0.27048617*1e-7);
+}
+
 TEST(Hamiltonian_1d, kinetic)
 {
     int size = 10;
