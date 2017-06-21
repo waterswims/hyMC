@@ -2,6 +2,7 @@
 #include "../include/array_alloc.hpp"
 #include "../include/vector_trig.hpp"
 #include "../include/spins_class.hpp"
+#include <cmath>
 
 double exchange_1d(const spin_lattice_1d &spins)
 {
@@ -32,5 +33,18 @@ double exchange_1d(const spin_lattice_1d &spins)
     dealloc_1darr<double>(sin_theta);
     dealloc_1darr<double>(sin_phi);
 
+    return E;
+}
+
+double kinetic_1d(const spin_lattice_1d &vels)
+{
+    double s = 0;
+    #pragma simd
+    for(int i = 0; i < vels.N; i++)
+    {
+        s += pow(vels.thetas[i], 2);
+        s += pow(vels.phis[i], 2);
+    }
+    double E = s / 2.;
     return E;
 }

@@ -5,4 +5,6 @@
 
 double exchange_1d(const spin_lattice_1d &spins);
 
+double kinetic_1d(const spin_lattice_1d &vels);
+
 #endif

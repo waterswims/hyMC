@@ -42,4 +42,16 @@ TEST(Hamiltonian_1d, exchange_specific)
     EXPECT_NEAR(exchange_1d(test_spins), 0.44975793200288505, 0.44975793200288505*1e-15);
 }
 
+TEST(Hamiltonian_1d, kinetic)
+{
+    int size = 10;
+    spin_lattice_1d test_vels(size);
+    for(int i = 0; i < size; i++)
+    {
+        test_vels.thetas[i] = i + 2.1;
+        test_vels.phis[i] = -i + 4.6;
+    }
+    EXPECT_NEAR(kinetic_1d(test_vels), 300.34999999999997, 300.34999999999997*1e-15);
+}
+
 #endif
