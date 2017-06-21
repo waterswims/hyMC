@@ -9,6 +9,8 @@ double total_energy_1d(const spin_lattice_1d &spins,
 
 double exchange_1d(const spin_lattice_1d &spins);
 
+void exchange_grad_1d(const spin_lattice_1d &spins, spin_lattice_1d &grad_out);
+
 double kinetic_1d(const spin_lattice_1d &vels);
 
 #endif
