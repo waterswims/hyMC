@@ -55,6 +55,13 @@ TEST(Hamiltonian_1d, exchange_grad)
     test_spins.phis[2] = 1.1;
 
     spin_lattice_1d grad(size);
+    #pragma simd
+    for(int i = 0; i < grad.N; i++)
+    {
+        grad.thetas[i] = 0;
+        grad.phis[i] = 0;
+    }
+
     exchange_grad_1d(test_spins, grad);
     EXPECT_NEAR(grad.thetas[0], -0.58118303, 0.58118303*1e-7);
     EXPECT_NEAR(grad.thetas[1], -0.11110539, 0.11110539*1e-7);
@@ -103,6 +110,40 @@ TEST(Hamiltonian_1d, total)
     E_flags[0] = false;
     EXPECT_NEAR(total_energy_1d(test_spins, test_vels, E_flags),
         3.5300000000000002, 3.5300000000000002*1e-15);
+
+    dealloc_1darr<bool>(E_flags);
+}
+
+TEST(Hamiltonian_1d, total_grad)
+{
+    int size = 3;
+    spin_lattice_1d test_spins(size);
+    test_spins.thetas[0] = 0.3;
+    test_spins.phis[0] = 2.3;
+    test_spins.thetas[1] = 1.6;
+    test_spins.phis[1] = 0.1;
+    test_spins.thetas[2] = 5.2;
+    test_spins.phis[2] = 1.1;
+
+    bool* E_flags = alloc_1darr<bool>(1);
+    spin_lattice_1d grads(size);
+    E_flags[0] = true;
+    total_energy_grad_1d(test_spins, grads, E_flags);
+    EXPECT_NEAR(grads.thetas[0], -0.58118303, 0.58118303*1e-7);
+    EXPECT_NEAR(grads.thetas[1], -0.11110539, 0.11110539*1e-7);
+    EXPECT_NEAR(grads.thetas[2], 0.69228842, 0.69228842*1e-7);
+    EXPECT_NEAR(grads.phis[0], -1.2087711, 1.2087711*1e-7);
+    EXPECT_NEAR(grads.phis[1], -0.57549375, 0.57549375*1e-7);
+    EXPECT_NEAR(grads.phis[2], -0.27048617, 0.27048617*1e-7);
+
+    E_flags[0] = false;
+    total_energy_grad_1d(test_spins, grads, E_flags);
+    EXPECT_EQ(grads.thetas[0], 0);
+    EXPECT_EQ(grads.thetas[1], 0);
+    EXPECT_EQ(grads.thetas[2], 0);
+    EXPECT_EQ(grads.phis[0], 0);
+    EXPECT_EQ(grads.phis[1], 0);
+    EXPECT_EQ(grads.phis[2], 0);
 
     dealloc_1darr<bool>(E_flags);
 }

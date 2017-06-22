@@ -20,6 +20,25 @@ double total_energy_1d(const spin_lattice_1d &spins,
     return E;
 }
 
+void total_energy_grad_1d(const spin_lattice_1d &spins,
+    spin_lattice_1d &grad_out,
+    const bool* energy_flags)
+{
+    // Zeros gradients
+    #pragma simd
+    for(int i = 0; i < grad_out.N; i++)
+    {
+        grad_out.thetas[i] = 0;
+        grad_out.phis[i] = 0;
+    }
+
+    // Add Exchange gradients
+    if (energy_flags[0])
+    {
+        exchange_grad_1d(spins, grad_out);
+    }
+}
+
 double exchange_1d(const spin_lattice_1d &spins)
 {
     double* cos_theta = alloc_1darr<double>(spins.N);
@@ -73,7 +92,7 @@ void exchange_grad_1d(const spin_lattice_1d &spins, spin_lattice_1d &grad_out)
         double dt_t2 = cos_theta[i] * sin_phi[i] * sin_theta[left] * sin_phi[left];
         double dt_t3 = -cos_theta[right] * sin_theta[i] * sin_phi[i] * sin_phi[right];
         double dt_t4 = cos_theta[i] * sin_phi[i] * sin_theta[right] * sin_phi[right];
-        grad_out.thetas[i] = dt_t1 + dt_t2 + dt_t3 + dt_t4;
+        grad_out.thetas[i] += dt_t1 + dt_t2 + dt_t3 + dt_t4;
 
         double dp_t1 = -cos_phi[left] * sin_phi[i];
         double dp_t2 = cos_theta[i] * cos_phi[i] * cos_theta[left] * sin_phi[left];
@@ -81,7 +100,7 @@ void exchange_grad_1d(const spin_lattice_1d &spins, spin_lattice_1d &grad_out)
         double dp_t4 = -cos_phi[right] * sin_phi[i];
         double dp_t5 = cos_theta[i] * cos_phi[i] * cos_theta[right] * sin_phi[right];
         double dp_t6 = cos_phi[i] * sin_theta[i] * sin_theta[right] * sin_phi[right];
-        grad_out.phis[i] = dp_t1 + dp_t2 + dp_t3 + dp_t4 + dp_t5 + dp_t6;
+        grad_out.phis[i] += dp_t1 + dp_t2 + dp_t3 + dp_t4 + dp_t5 + dp_t6;
     }
 
     dealloc_1darr<double>(cos_theta);
