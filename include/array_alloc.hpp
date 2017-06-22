@@ -13,10 +13,10 @@ template <class T> void dealloc_2darr(int size_m, T** arr, bool contig=true);
 
 template <class T> void dealloc_3darr(int size_m, int size_n, T*** arr, bool contig=true);
 
-template <class T> T* deep_copy_1darr(int size_m, T* arr);
+template <class T> T* deep_copy_1darr(int size_m, const T* arr);
 
-template <class T> T** deep_copy_2darr(int size_m, int size_n, T** arr, bool contig=true);
+template <class T> T** deep_copy_2darr(int size_m, int size_n, const T** arr, bool contig=true);
 
-template <class T> T*** deep_copy_3darr(int size_m, int size_n, int size_p, T*** arr, bool contig=true);
+template <class T> T*** deep_copy_3darr(int size_m, int size_n, int size_p, const T*** arr, bool contig=true);
 
 #endif
