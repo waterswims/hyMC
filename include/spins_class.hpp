@@ -8,6 +8,7 @@ public:
     double* phis;
     int N;
     spin_lattice_1d(const int length);
+    spin_lattice_1d(const spin_lattice_1d &cop);
     ~spin_lattice_1d();
 };
 
