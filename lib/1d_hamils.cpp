@@ -1,4 +1,5 @@
 #include "../include/1d_hamils.hpp"
+#include "../include/constants.hpp"
 
 void hmc::exchange_grad_1d(std::valarray<double>& grad_out,
                       const std::valarray<double>& data)
@@ -39,14 +40,14 @@ void hmc::exchange_grad_1d(std::valarray<double>& grad_out,
 }
 
 std::function<void(std::valarray<double>&, const std::valarray<double>&)>
-    hmc::gen_total_grad_1d(std::vector<bool> E_flags)
+hmc::gen_total_grad_1d( const HamiltonianOptions options )
 {
     std::function<void(std::valarray<double>&, const std::valarray<double>&)> init_f =
         [](std::valarray<double>& grad_out, const std::valarray<double>& data)
         {grad_out = 0;};
 
     std::function<void(std::valarray<double>&, const std::valarray<double>&)> new_f;
-    if (E_flags[0])
+    if ( options.J != 0 )
     {
         new_f =
             [init_f](std::valarray<double>& grad_out, const std::valarray<double>& data)
@@ -84,17 +85,17 @@ double hmc::exchange_energy_1d(const std::valarray<double>& data)
 }
 
 std::function<double(const std::valarray<double>&)>
-    hmc::gen_total_energy_1d(std::vector<bool> E_flags)
+hmc::gen_total_energy_1d( const HamiltonianOptions options, const double beta )
 {
     std::function<double(const std::valarray<double>&)> init_f =
         [](const std::valarray<double>& data){return 0;};
 
     std::function<double(const std::valarray<double>&)> new_f;
-    if (E_flags[0])
+    if ( options.J != 0 )
     {
         new_f =
-            [init_f](const std::valarray<double>& data)
-            {return init_f(data) + exchange_energy_1d(data);};
+            [init_f, beta](const std::valarray<double>& data)
+            {return init_f(data) + exchange_energy_1d( data ) * beta; };
         init_f = new_f;
     }
 

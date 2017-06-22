@@ -1,8 +1,12 @@
 #include "../include/hmc.hpp"
+#include "../include/1d_hamils.hpp"
+#include "../include/2d_hamils.hpp"
 #include "../include/leapfrog.hpp"
 #include "../include/mklrand.hpp"
-#include "../include/array_alloc.hpp"
+#include "../include/constants.hpp"
 #include <cmath>
+#include <exception>
+#define _USE_MATH_DEFINES
 
 bool hmc::accept_trial( const double e, const double e_trial,
                          mklrand::mkl_drand &rng )
@@ -97,5 +101,99 @@ std::vector<std::valarray<double> > hmc::hmc(
         // Store the reduced parameters
         trace.push_back( reduce( current_state ) );
     }
+
     return trace;
+}
+
+std::function<double(const std::valarray<double>&)>
+hmc::heisenberg_hamiltonian( const size_t ndims, const HamiltonianOptions options, const double beta )
+{
+    switch( ndims )
+    {
+    case 1:
+        return gen_total_energy_1d( options, beta );
+        break;
+    case 2:
+        return gen_total_energy_2d( options, beta );
+        break;
+    default:
+        throw std::invalid_argument( "Must specify 1 or 2 dimensions!");
+    }
+}
+
+std::function<void(std::valarray<double>&, const std::valarray<double>&)>
+hmc::heisenberg_gradients( const size_t ndims, const HamiltonianOptions options )
+{
+    switch( ndims )
+    {
+    case 1:
+        return gen_total_grad_1d( options );
+        break;
+    case 2:
+        return gen_total_grad_2d( options );
+        break;
+    default:
+        throw std::invalid_argument( "Must specify 1 or 2 dimensions!");
+    }
+}
+
+/// Interface to Heisenberg hmc
+void hmc::heisenberg_model(
+    std::valarray<double> &sample_energy,
+    std::valarray<double> &sample_magnetisation,
+    const std::vector<size_t> system_dimensions,
+    const HamiltonianOptions options,
+    const double beta,
+    const double leapfrog_eps,
+    const size_t leapfrog_steps,
+    const size_t nsamples,
+    const long initial_state_seed )
+{
+    // Compute the size of the state vector
+    // theta and phi for every element in system
+    const double state_size = 2 * std::accumulate(
+        system_dimensions.begin(),
+        system_dimensions.end(),
+        1, std::multiplies<double>() );
+
+    // Random initial state is controlled with the initial_state_seed
+    std::valarray<double> initial_state( state_size );
+    mklrand::mkl_drand rng( initial_state_seed );
+    for( unsigned int i=0; i<state_size; i++ )
+        initial_state[i] = rng.gen() * 2 * M_PI;
+
+    // Get the Hamiltonian and gradient functions
+    size_t ndim = system_dimensions.size();
+    auto energy_function = heisenberg_hamiltonian( ndim, options, beta );
+    auto grad_function = heisenberg_gradients( ndim, options );
+
+    // Reduction to compute the magnetisation
+    std::function<std::valarray<double>(const std::valarray<double>&)>
+        reduce = []( const std::valarray<double>& state )
+        {
+            std::valarray<double> res = { magnetisation( state ) };
+            return res;
+        };
+
+    // EXECUTE HMC
+    auto trace = hmc::hmc( sample_energy, initial_state, leapfrog_eps, leapfrog_steps, nsamples,
+                           energy_function, grad_function, reduce );
+
+    // Energy is returned normalised so we turn it into real energy
+    sample_energy = sample_energy / beta;
+
+    // Magnetisation is stored in the trace
+    for( size_t n=0; n<nsamples; n++ )
+        sample_magnetisation[n] = trace[n][0];
+}
+
+double hmc::magnetisation( const std::valarray<double>& state )
+{
+    int halfsize = state.size() / 2;
+    std::slice tslice(0, halfsize, 1);
+    std::slice pslice(halfsize, halfsize, 1);
+    double x = ( cos( state[tslice] ) * sin( state[pslice] ) ).sum();
+    double y = ( sin( state[tslice] ) * sin( state[pslice] ) ).sum();
+    double z = cos( state[pslice] ).sum();
+    return std::sqrt( x*x + y*y + z*z );
 }

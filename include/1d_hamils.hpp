@@ -1,6 +1,7 @@
 #ifndef HAMIL_1D
 #define HAMIL_1D
 
+#include "../include/hmc.hpp"
 #include <functional>
 #include <valarray>
 #include <vector>
@@ -40,7 +41,7 @@ namespace hmc
     ///                exchange energy gradient.
     ///////////////////////////////////////////////////////////////////////////
     std::function<void(std::valarray<double>&, const std::valarray<double>&)>
-        gen_total_grad_1d(std::vector<bool> E_flags);
+    gen_total_grad_1d( const HamiltonianOptions );
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Calculates the exchange energy of a 1D system.
@@ -69,7 +70,7 @@ namespace hmc
     ///                exchange energy.
     ///////////////////////////////////////////////////////////////////////////
     std::function<double(const std::valarray<double>&)>
-        gen_total_energy_1d(std::vector<bool> E_flags);
+    gen_total_energy_1d( const HamiltonianOptions, const double beta );
 }
 
 #endif

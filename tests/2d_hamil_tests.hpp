@@ -2,6 +2,7 @@
 #define HAMIL_2D_TEST
 
 #include "../include/2d_hamils.hpp"
+#include "../include/hmc.hpp"
 #include <gtest/gtest.h>
 
 TEST(Hamiltonian_2d, trig_left_up)
@@ -134,16 +135,17 @@ TEST(Hamiltonian_2d, total_energy)
     test_spins[3] = 3.4;
     test_spins[7] = 2.1;
 
-    std::vector<bool> E_flags(1);
+    struct hmc::HamiltonianOptions options;
+    double beta = 1.0;
     std::function<double(const std::valarray<double>&)> E_func;
 
-    E_flags[0] = true;
-    E_func = hmc::gen_total_energy_2d(E_flags);
+    options.J = 1.0;
+    E_func = hmc::gen_total_energy_2d( options, beta );
     EXPECT_NEAR(E_func(test_spins), 3.4939748074272869,
                                         3.4939748074272869*1e-15);
 
-    E_flags[0] = false;
-    E_func = hmc::gen_total_energy_2d(E_flags);
+    options.J = 0.0;
+    E_func = hmc::gen_total_energy_2d( options, beta );
     EXPECT_EQ(E_func(test_spins), 0);
 }
 
@@ -196,11 +198,11 @@ TEST(Hamiltonian_2d, total_grad)
     test_spins[7] = 2.1;
 
     std::valarray<double> grad(size*2);
-    std::vector<bool> E_flags(1);
+    struct hmc::HamiltonianOptions options;
     std::function<void(std::valarray<double>&, const std::valarray<double>&)> g_func;
 
-    E_flags[0] = true;
-    g_func = hmc::gen_total_grad_2d(E_flags);
+    options.J = 1.0;
+    g_func = hmc::gen_total_grad_2d( options );
     g_func(grad, test_spins);
     EXPECT_NEAR(grad[0], -1.1623660509440559, 1.1623660509440559*1e-15);
     EXPECT_NEAR(grad[1], 0.024380126112986563, 0.024380126112986563*1e-15);
@@ -211,8 +213,8 @@ TEST(Hamiltonian_2d, total_grad)
     EXPECT_NEAR(grad[6], 2.0356793154147046, 2.0356793154147046*1e-15);
     EXPECT_NEAR(grad[7], -2.2735417704169287, 2.2735417704169287*1e-15);
 
-    E_flags[0] = false;
-    g_func = hmc::gen_total_grad_2d(E_flags);
+    options.J = 0.0;
+    g_func = hmc::gen_total_grad_2d( options );
     g_func(grad, test_spins);
     EXPECT_EQ(grad[0], 0);
     EXPECT_EQ(grad[1], 0);

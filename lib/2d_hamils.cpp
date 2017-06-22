@@ -1,4 +1,5 @@
 #include "../include/2d_hamils.hpp"
+#include "../include/hmc.hpp"
 #include <cmath>
 
 double hmc::exchange_energy_2d(const std::vector<std::valarray<double> >& trig_angles)
@@ -44,7 +45,7 @@ void hmc::exchange_grad_2d(std::valarray<double>& grad_out,
 }
 
 std::function<void(std::valarray<double>&, const std::valarray<double>&)>
-    hmc::gen_total_grad_2d(std::vector<bool> E_flags)
+hmc::gen_total_grad_2d( const HamiltonianOptions options )
 {
     // Init blank grad function
     std::function<void(std::valarray<double>&, const std::vector<std::valarray<double> >&)> init_f, new_f;
@@ -52,7 +53,7 @@ std::function<void(std::valarray<double>&, const std::valarray<double>&)>
         {grad_out = 0;};
 
     // Add Exchange gradient
-    if(E_flags[0])
+    if( options.J != 0)
     {
         new_f = [init_f](std::valarray<double>& grad_out, const std::vector<std::valarray<double> >& data)
             {
@@ -131,7 +132,7 @@ std::vector<std::valarray<double> > hmc::trig_lrud(const std::valarray<double> d
 }
 
 std::function<double(const std::valarray<double>&)>
-    hmc::gen_total_energy_2d(std::vector<bool> E_flags)
+hmc::gen_total_energy_2d( const HamiltonianOptions options, const double beta )
 {
     // Init blank energy function
     std::function<double(const std::vector<std::valarray<double> >&)> init_f =
@@ -139,11 +140,11 @@ std::function<double(const std::valarray<double>&)>
     std::function<double(const std::vector<std::valarray<double> >&)> new_f;
 
     // Add exchange energy
-    if (E_flags[0])
+    if ( options.J != 0)
     {
         new_f =
-            [init_f](const std::vector<std::valarray<double> >& data)
-            {return init_f(data) + exchange_energy_2d(data);};
+            [init_f, beta](const std::vector<std::valarray<double> >& data)
+            {return init_f(data) + exchange_energy_2d(data) * beta;};
         init_f = new_f;
     }
 
