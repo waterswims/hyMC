@@ -8,6 +8,13 @@ spin_lattice_1d::spin_lattice_1d(const int length)
     N = length;
 }
 
+spin_lattice_1d::spin_lattice_1d(const spin_lattice_1d &cop)
+{
+    N = cop.N;
+    thetas = deep_copy_1darr<double>(N, cop.thetas);
+    phis = deep_copy_1darr<double>(N, cop.phis);
+}
+
 spin_lattice_1d::~spin_lattice_1d()
 {
     dealloc_1darr<double>(thetas);
