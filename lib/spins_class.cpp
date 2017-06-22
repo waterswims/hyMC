@@ -6,6 +6,15 @@ spin_lattice_1d::spin_lattice_1d(const int length)
     thetas = alloc_1darr<double>(length);
     phis = alloc_1darr<double>(length);
     N = length;
+    mem_manage = true;
+}
+
+spin_lattice_1d::spin_lattice_1d(const int length, double *t, double *p)
+{
+    thetas = t;
+    phis = p;
+    N = length;
+    mem_manage = false;
 }
 
 spin_lattice_1d::spin_lattice_1d(const spin_lattice_1d &cop)
@@ -17,6 +26,9 @@ spin_lattice_1d::spin_lattice_1d(const spin_lattice_1d &cop)
 
 spin_lattice_1d::~spin_lattice_1d()
 {
-    dealloc_1darr<double>(thetas);
-    dealloc_1darr<double>(phis);
+    if( mem_manage )
+    {
+        dealloc_1darr<double>(thetas);
+        dealloc_1darr<double>(phis);
+    }
 }
