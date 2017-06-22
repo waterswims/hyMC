@@ -1,5 +1,6 @@
 # Use intel compiler
 CXX=icpc
+CC=icc
 
 # Get the compiler
 OS := $(shell uname)
@@ -32,10 +33,19 @@ OBJ_FILES=$(addprefix $(OBJ_PATH)/,$(notdir $(LIB_SOURCES:.cpp=.o)))
 TEST_FILES=$(wildcard $(TEST_PATH)/*.hpp)
 
 # Default target builds the static hymc library
-default: hymc.a
+default: libhymc.so setup.py pyhmc.pyx
+	CXX=$(CXX) CC=$(CC) pip install -e .
+
+main: main.cpp
+	$(CXX)	$(CXXFLAGS) \
+	-o $@ main.cpp -lhymc
+	$(LDLIBS)
 
 hymc.a: $(OBJ_FILES)
 	ar rcs 	$@ $^
+
+libhymc.so: $(OBJ_FILES)
+	$(CXX) -shared -o $@ $^
 
 tests: runtests
 
@@ -51,7 +61,7 @@ runtests: $(TEST_PATH)/test.cpp hymc.a $(TEST_PATH)/libs/gtest_main.a $(TEST_FIL
 
 # Build the object files
 $(OBJ_PATH)/%.o: $(LIB_PATH)/%.cpp
-	$(CXX)	$(CXXFLAGS) -c \
+	$(CXX)	$(CXXFLAGS) -c -fPIC \
 		-o $@ $<
 
 # GTEST build

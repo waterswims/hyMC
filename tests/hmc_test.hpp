@@ -136,6 +136,13 @@ TEST( hmc, hmc_sampling_normal_distribution )
     EXPECT_NEAR( std, sample_std, 0.001 );
 }
 
+TEST( hmc, magnetisaton )
+{
+    std::valarray<double> state = { 0.2, 0.2, 1.1, 1.1 };
+
+    EXPECT_DOUBLE_EQ( 2.0, hmc::magnetisation( state ) );
+}
+
 // TEST( hmc, hmc_sampling_univariate_distribution )
 // {
 //     // Sampling from a bivariate distribution

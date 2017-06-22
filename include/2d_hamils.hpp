@@ -1,6 +1,8 @@
 #ifndef HAMIL_2D
 #define HAMIL_2D
 
+#include "../include/hmc.hpp"
+
 #include <functional>
 #include <valarray>
 #include <vector>
@@ -56,7 +58,7 @@ namespace hmc
     ///                exchange energy gradient.
     ///////////////////////////////////////////////////////////////////////////
     std::function<void(std::valarray<double>&, const std::valarray<double>&)>
-        gen_total_grad_2d(std::vector<bool> E_flags);
+    gen_total_grad_2d( const HamiltonianOptions );
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Calculates the cosine and sine of the spin angles and then shifts
@@ -107,7 +109,7 @@ namespace hmc
     ///                exchange energy.
     ///////////////////////////////////////////////////////////////////////////
     std::function<double(const std::valarray<double>&)>
-        gen_total_energy_2d(std::vector<bool> E_flags);
+    gen_total_energy_2d( const HamiltonianOptions, const double beta );
 }
 
 #endif
