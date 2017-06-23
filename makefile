@@ -11,8 +11,8 @@ GTEST_DIR=tests/googletest/googletest
 GTEST_FLAGS=-isystem $(GTEST_DIR)/include
 
 # C flags
-CXXFLAGS=--std=c++11 -W -Wall -pedantic -O3 -g -DMKL_ILP64 -I$(MKLROOT)/include
-LDLIBS=-Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_ilp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+CXXFLAGS=--std=c++11 -W -Wall -pedantic -O3 -g -DMKL_ILP64 -I$(MKLROOT)/include -use-intel-optimized-headers
+LDLIBS=-use-intel-optimized-headers -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_ilp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
 
 # Collect all the library source files from the library director
 LIB_SOURCES=$(wildcard $(LIB_PATH)/*.cpp)
