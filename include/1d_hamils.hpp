@@ -7,6 +7,9 @@
 
 namespace hmc
 {
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Calculates the gradient of the exchange energy of a 1D system
+    ///////////////////////////////////////////////////////////////////////////
     void exchange_grad_1d(std::valarray<double>& grad_out,
                           const std::valarray<double>& data);
 
