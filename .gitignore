@@ -4,3 +4,4 @@ tests/test_files/double_save_test.cp
 objects/*
 runtests
 notebooks/.ipynb_checkpoints/*
+docs/latex/*
