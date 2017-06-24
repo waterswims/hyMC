@@ -1,7 +1,6 @@
 #ifndef HMC_H
 #define HMC_H
 #include "./mklrand.hpp"
-#include "./spins_class.hpp"
 #include <functional>
 #include <valarray>
 #include <vector>
