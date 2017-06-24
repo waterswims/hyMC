@@ -1,0 +1,6 @@
+\form#0:$\partial/\partial \theta$
+\form#1:$\partial/\partial \phi$
+\form#2:$\sum_{ij} J_{ij} \mathbf{s}_i\cdot\mathbf{s}_j $
+\form#3:$J_{ij} =$
+\form#4:$\theta$
+\form#5:$\phi$
