@@ -1,5 +1,5 @@
-#ifndef _RANDNUMTEST
-#define _RANDNUMTEST
+#ifndef _RANDTEST
+#define _RANDTEST
 
 #include "../include/mklrand.hpp"
 #include <gtest/gtest.h>
