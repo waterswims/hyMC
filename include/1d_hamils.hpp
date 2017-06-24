@@ -1,20 +1,22 @@
 #ifndef HAMIL_1D
 #define HAMIL_1D
 
-#include "spins_class.hpp"
+#include <functional>
+#include <valarray>
+#include <vector>
 
-double total_energy_1d(const spin_lattice_1d &spins,
-    const spin_lattice_1d &vels,
-    const bool* energy_flags);
+namespace hmc
+{
+    void exchange_grad_1d(std::valarray<double>& grad_out,
+                          const std::valarray<double>& data);
 
-void total_energy_grad_1d(const spin_lattice_1d &spins,
-    spin_lattice_1d &grad_out,
-    const bool* energy_flags);
+    std::function<void(std::valarray<double>&, const std::valarray<double>&)>
+        gen_total_grad_1d(std::vector<bool> E_flags);
 
-double exchange_1d(const spin_lattice_1d &spins);
+    double exchange_energy_1d(const std::valarray<double>& data);
 
-void exchange_grad_1d(const spin_lattice_1d &spins, spin_lattice_1d &grad_out);
-
-double kinetic_1d(const spin_lattice_1d &vels);
+    std::function<double(const std::valarray<double>&)>
+        gen_total_energy_1d(std::vector<bool> E_flags);
+}
 
 #endif
