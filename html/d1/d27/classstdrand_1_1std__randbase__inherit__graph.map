@@ -1,0 +1,4 @@
+<map id="stdrand::std_randbase" name="stdrand::std_randbase">
+<area shape="rect" id="node2" href="$d5/dbe/classstdrand_1_1std__d__unirand.html" title="Generator for uniform numbers between 0 and 1. " alt="" coords="5,80,160,107"/>
+<area shape="rect" id="node3" href="$d5/d23/classstdrand_1_1std__normrand.html" title="Generator for random numbers on a normal distribution. " alt="" coords="184,80,336,107"/>
+</map>
