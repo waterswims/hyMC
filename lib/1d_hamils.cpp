@@ -1,123 +1,102 @@
 #include "../include/1d_hamils.hpp"
-#include "../include/array_alloc.hpp"
-#include "../include/vector_trig.hpp"
-#include "../include/spins_class.hpp"
-#include <cmath>
 
-double total_energy_1d(const spin_lattice_1d &spins,
-    const spin_lattice_1d &vels,
-    const bool* energy_flags)
+void hmc::exchange_grad_1d(std::valarray<double>& grad_out,
+                      const std::valarray<double>& data)
 {
-    // Start with kinetic energy
-    double E = kinetic_1d(vels);
+    int halfsize = data.size() / 2;
+    std::slice tslice(0, halfsize, 1);
+    std::slice pslice(halfsize, halfsize, 1);
 
-    // Add Exchange
-    if (energy_flags[0])
-    {
-        E += exchange_1d(spins);
-    }
+    std::valarray<double> cos_theta = cos(data[tslice]);
+    std::valarray<double> sin_theta = sin(data[tslice]);
+    std::valarray<double> cos_phi = cos(data[pslice]);
+    std::valarray<double> sin_phi = sin(data[pslice]);
 
-    return E;
+    std::valarray<double> cos_theta_left = cos_theta.cshift(1);
+    std::valarray<double> sin_theta_left = sin_theta.cshift(1);
+    std::valarray<double> cos_phi_left = cos_phi.cshift(1);
+    std::valarray<double> sin_phi_left = sin_phi.cshift(1);
+
+    std::valarray<double> cos_theta_right = cos_theta.cshift(-1);
+    std::valarray<double> sin_theta_right = sin_theta.cshift(-1);
+    std::valarray<double> cos_phi_right = cos_phi.cshift(-1);
+    std::valarray<double> sin_phi_right = sin_phi.cshift(-1);
+
+    std::valarray<double> t1, t2, t3, t4, t5, t6;
+    t1 = -cos_theta_left * sin_theta * sin_phi * sin_phi_left;
+    t2 = cos_theta * sin_phi * sin_theta_left * sin_phi_left;
+    t3 = -cos_theta_right * sin_theta * sin_phi * sin_phi_right;
+    t4 = cos_theta * sin_phi * sin_theta_right * sin_phi_right;
+    grad_out[tslice] += t1 + t2 + t3 + t4;
+
+    t1 = -cos_phi_left * sin_phi;
+    t2 = cos_theta * cos_phi * cos_theta_left * sin_phi_left;
+    t3 = cos_phi * sin_theta * sin_theta_left * sin_phi_left;
+    t4 = -cos_phi_right * sin_phi;
+    t5 = cos_theta * cos_phi * cos_theta_right * sin_phi_right;
+    t6 = cos_phi * sin_theta * sin_theta_right * sin_phi_right;
+    grad_out[pslice] += t1 + t2 + t3 + t4 + t5 + t6;
 }
 
-void total_energy_grad_1d(const spin_lattice_1d &spins,
-    spin_lattice_1d &grad_out,
-    const bool* energy_flags)
+std::function<void(std::valarray<double>&, const std::valarray<double>&)>
+    hmc::gen_total_grad_1d(std::vector<bool> E_flags)
 {
-    // Zeros gradients
-    #pragma simd
-    for(int i = 0; i < grad_out.N; i++)
+    std::function<void(std::valarray<double>&, const std::valarray<double>&)> init_f =
+        [](std::valarray<double>& grad_out, const std::valarray<double>& data)
+        {grad_out = 0;};
+
+    std::function<void(std::valarray<double>&, const std::valarray<double>&)> new_f;
+    if (E_flags[0])
     {
-        grad_out.thetas[i] = 0;
-        grad_out.phis[i] = 0;
+        new_f =
+            [init_f](std::valarray<double>& grad_out, const std::valarray<double>& data)
+            {
+                init_f(grad_out, data);
+                exchange_grad_1d(grad_out, data);
+            };
+        init_f = new_f;
     }
 
-    // Add Exchange gradients
-    if (energy_flags[0])
-    {
-        exchange_grad_1d(spins, grad_out);
-    }
+    return init_f;
 }
 
-double exchange_1d(const spin_lattice_1d &spins)
+double hmc::exchange_energy_1d(const std::valarray<double>& data)
 {
-    double* cos_theta = alloc_1darr<double>(spins.N);
-    double* cos_phi = alloc_1darr<double>(spins.N);
-    double* sin_theta = alloc_1darr<double>(spins.N);
-    double* sin_phi = alloc_1darr<double>(spins.N);
+    int halfsize = data.size() / 2;
+    std::slice tslice(0, halfsize, 1);
+    std::slice pslice(halfsize, halfsize, 1);
 
-    cos_1dvec(spins.thetas, cos_theta, spins.N);
-    cos_1dvec(spins.phis, cos_phi, spins.N);
-    sin_1dvec(spins.thetas, sin_theta, spins.N);
-    sin_1dvec(spins.phis, sin_phi, spins.N);
+    std::valarray<double> cos_theta = cos(data[tslice]);
+    std::valarray<double> sin_theta = sin(data[tslice]);
+    std::valarray<double> cos_phi = cos(data[pslice]);
+    std::valarray<double> sin_phi = sin(data[pslice]);
 
-    double E = 0;
+    std::valarray<double> cos_theta_left = cos_theta.cshift(1);
+    std::valarray<double> sin_theta_left = sin_theta.cshift(1);
+    std::valarray<double> cos_phi_left = cos_phi.cshift(1);
+    std::valarray<double> sin_phi_left = sin_phi.cshift(1);
 
-    #pragma simd
-    for(int i = 0; i < spins.N; i++)
-    {
-        int right = (i + 1)%spins.N;
-        double t1 = cos_phi[i] * cos_phi[right];
-        double t2 = cos_theta[i] * cos_theta[right] * sin_phi[i] * sin_phi[right];
-        double t3 = sin_theta[i] * sin_phi[i] * sin_theta[right] * sin_phi[right];
-        E -= t1 + t2 + t3;
-    }
+    double t1 = (cos_phi * cos_phi_left).sum();
+    double t2 = (cos_theta * cos_theta_left * sin_phi * sin_phi_left).sum();
+    double t3 = (sin_theta * sin_phi * sin_theta_left * sin_phi_left).sum();
 
-    dealloc_1darr<double>(cos_theta);
-    dealloc_1darr<double>(cos_phi);
-    dealloc_1darr<double>(sin_theta);
-    dealloc_1darr<double>(sin_phi);
-
-    return E;
+    return -(t1 + t2 + t3);
 }
 
-void exchange_grad_1d(const spin_lattice_1d &spins, spin_lattice_1d &grad_out)
+std::function<double(const std::valarray<double>&)>
+    hmc::gen_total_energy_1d(std::vector<bool> E_flags)
 {
-    double* cos_theta = alloc_1darr<double>(spins.N);
-    double* cos_phi = alloc_1darr<double>(spins.N);
-    double* sin_theta = alloc_1darr<double>(spins.N);
-    double* sin_phi = alloc_1darr<double>(spins.N);
+    std::function<double(const std::valarray<double>&)> init_f =
+        [](const std::valarray<double>& data){return 0;};
 
-    cos_1dvec(spins.thetas, cos_theta, spins.N);
-    cos_1dvec(spins.phis, cos_phi, spins.N);
-    sin_1dvec(spins.thetas, sin_theta, spins.N);
-    sin_1dvec(spins.phis, sin_phi, spins.N);
-
-    for(int i = 0; i < spins.N; i++)
+    std::function<double(const std::valarray<double>&)> new_f;
+    if (E_flags[0])
     {
-        int left = (spins.N + ((i - 1) % spins.N)) % spins.N;
-        int right = (i + 1) % spins.N;
-
-        double dt_t1 = -cos_theta[left] * sin_theta[i] * sin_phi[i] * sin_phi[left];
-        double dt_t2 = cos_theta[i] * sin_phi[i] * sin_theta[left] * sin_phi[left];
-        double dt_t3 = -cos_theta[right] * sin_theta[i] * sin_phi[i] * sin_phi[right];
-        double dt_t4 = cos_theta[i] * sin_phi[i] * sin_theta[right] * sin_phi[right];
-        grad_out.thetas[i] += dt_t1 + dt_t2 + dt_t3 + dt_t4;
-
-        double dp_t1 = -cos_phi[left] * sin_phi[i];
-        double dp_t2 = cos_theta[i] * cos_phi[i] * cos_theta[left] * sin_phi[left];
-        double dp_t3 = cos_phi[i] * sin_theta[i] * sin_theta[left] * sin_phi[left];
-        double dp_t4 = -cos_phi[right] * sin_phi[i];
-        double dp_t5 = cos_theta[i] * cos_phi[i] * cos_theta[right] * sin_phi[right];
-        double dp_t6 = cos_phi[i] * sin_theta[i] * sin_theta[right] * sin_phi[right];
-        grad_out.phis[i] += dp_t1 + dp_t2 + dp_t3 + dp_t4 + dp_t5 + dp_t6;
+        new_f =
+            [init_f](const std::valarray<double>& data)
+            {return init_f(data) + exchange_energy_1d(data);};
+        init_f = new_f;
     }
 
-    dealloc_1darr<double>(cos_theta);
-    dealloc_1darr<double>(cos_phi);
-    dealloc_1darr<double>(sin_theta);
-    dealloc_1darr<double>(sin_phi);
-}
-
-double kinetic_1d(const spin_lattice_1d &vels)
-{
-    double s = 0;
-    #pragma simd
-    for(int i = 0; i < vels.N; i++)
-    {
-        s += pow(vels.thetas[i], 2);
-        s += pow(vels.phis[i], 2);
-    }
-    double E = s / 2.;
-    return E;
+    return init_f;
 }
