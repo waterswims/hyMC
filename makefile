@@ -31,6 +31,10 @@ hymc.a: $(OBJ_FILES)
 
 tests: runtests
 
+.PHONY: docs
+docs:
+	doxygen doxy.config
+
 runtests: $(TEST_PATH)/test.cpp hymc.a $(TEST_PATH)/libs/gtest_main.a $(TEST_FILES)
 	$(CXX) 	$(GTEST_FLAGS) $(CXXFLAGS) $< $(TEST_PATH)/libs/gtest_main.a \
 		$(OBJ_FILES) \
