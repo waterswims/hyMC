@@ -1,6 +1,6 @@
 #include "../include/mklrand.hpp"
 
-mkl_drand::mkl_drand(int size, int seed)
+mklrand::mkl_drand::mkl_drand(int size, int seed)
 {
 	arr_size = size;
 	curr = 0;
@@ -9,12 +9,12 @@ mkl_drand::mkl_drand(int size, int seed)
 	this -> fill();
 }
 
-mkl_drand::~mkl_drand()
+mklrand::mkl_drand::~mkl_drand()
 {
 	free(randarr);
 }
 
-double mkl_drand::gen()
+double mklrand::mkl_drand::gen()
 {
 	double out = randarr[curr];
 	curr++;
@@ -25,20 +25,20 @@ double mkl_drand::gen()
 	return out;
 }
 
-void mkl_drand::fill()
+void mklrand::mkl_drand::fill()
 {
 	curr = 0;
 	vdRngUniform(VSL_RNG_METHOD_UNIFORM_STD, stream, arr_size, randarr, 0, 1);
 }
 
-void mkl_drand::change_seed(int seed)
+void mklrand::mkl_drand::change_seed(int seed)
 {
 	vslDeleteStream(&stream);
 	vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
 	this->fill();
 }
 
-mkl_irand::mkl_irand(int size, int seed)
+mklrand::mkl_irand::mkl_irand(int size, int seed)
 {
 	arr_size = size;
 	curr = 0;
@@ -48,12 +48,12 @@ mkl_irand::mkl_irand(int size, int seed)
 	this -> fill();
 }
 
-mkl_irand::~mkl_irand()
+mklrand::mkl_irand::~mkl_irand()
 {
 	free(randarr);
 }
 
-int mkl_irand::gen()
+int mklrand::mkl_irand::gen()
 {
 	int out = randarr[curr];
 	curr++;
@@ -64,20 +64,20 @@ int mkl_irand::gen()
 	return out;
 }
 
-void mkl_irand::fill()
+void mklrand::mkl_irand::fill()
 {
 	curr = 0;
 	viRngUniform(VSL_RNG_METHOD_UNIFORM_STD, stream, arr_size, randarr, 0, 2);
 }
 
-void mkl_irand::change_seed(int seed)
+void mklrand::mkl_irand::change_seed(int seed)
 {
 	vslDeleteStream(&stream);
 	vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
 	this->fill();
 }
 
-mkl_lnrand::mkl_lnrand(double m, double sd, int size, int seed)
+mklrand::mkl_lnrand::mkl_lnrand(double m, double sd, int size, int seed)
 {
 	lmean = m;
 	lsd = sd;
@@ -88,12 +88,12 @@ mkl_lnrand::mkl_lnrand(double m, double sd, int size, int seed)
 	this -> fill();
 }
 
-mkl_lnrand::~mkl_lnrand()
+mklrand::mkl_lnrand::~mkl_lnrand()
 {
 	free(randarr);
 }
 
-double mkl_lnrand::gen()
+double mklrand::mkl_lnrand::gen()
 {
 	double out = randarr[curr];
 	curr++;
@@ -104,20 +104,20 @@ double mkl_lnrand::gen()
 	return out;
 }
 
-void mkl_lnrand::fill()
+void mklrand::mkl_lnrand::fill()
 {
 	curr = 0;
 	vdRngLognormal(VSL_RNG_METHOD_LOGNORMAL_BOXMULLER2, stream, arr_size, randarr, lmean, lsd, 0, 1);
 }
 
-void mkl_lnrand::change_seed(int seed)
+void mklrand::mkl_lnrand::change_seed(int seed)
 {
 	vslDeleteStream(&stream);
 	vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
 	this->fill();
 }
 
-mkl_nrand::mkl_nrand(double m, double sdin, int size, int seed)
+mklrand::mkl_nrand::mkl_nrand(double m, double sdin, int size, int seed)
 {
 	mean = m;
 	sd = sdin;
@@ -128,12 +128,12 @@ mkl_nrand::mkl_nrand(double m, double sdin, int size, int seed)
 	this -> fill();
 }
 
-mkl_nrand::~mkl_nrand()
+mklrand::mkl_nrand::~mkl_nrand()
 {
 	free(randarr);
 }
 
-double mkl_nrand::gen()
+double mklrand::mkl_nrand::gen()
 {
 	double out = randarr[curr];
 	curr++;
@@ -144,13 +144,13 @@ double mkl_nrand::gen()
 	return out;
 }
 
-void mkl_nrand::fill()
+void mklrand::mkl_nrand::fill()
 {
 	curr = 0;
 	vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER2, stream, arr_size, randarr, mean, sd);
 }
 
-void mkl_nrand::change_seed(int seed)
+void mklrand::mkl_nrand::change_seed(int seed)
 {
 	vslDeleteStream(&stream);
 	vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);

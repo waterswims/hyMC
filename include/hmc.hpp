@@ -18,7 +18,7 @@ namespace hmc {
     bool accept_trial(
         const double current_energy,
         const double trial_energy,
-        mkl_drand &rng );
+        mklrand::mkl_drand &rng );
 
     double kinetic_energy(
         const std::valarray<double> velocity );

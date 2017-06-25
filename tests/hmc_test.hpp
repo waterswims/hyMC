@@ -16,7 +16,7 @@ TEST( hmc, acceptance_always )
 {
     // Create rng
     int seed = 1001;
-    mkl_drand rng( 1, seed );
+    mklrand::mkl_drand rng( 1, seed );
 
     // Always accept when the new energy is lower
     double before = 0.2;
@@ -38,7 +38,7 @@ TEST( hmc, accept_probability )
 {
     // Create rng
     int seed = 1001;
-    mkl_drand rng( 1000, seed );
+    mklrand::mkl_drand rng( 1000, seed );
 
     // Accept with prob exp(-(after-before))
     double before = 2;
