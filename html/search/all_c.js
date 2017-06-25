@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['save',['save',['../d7/dda/classmkl__randbase.html#a62dd2d59a3b339680c2d29822e44efa5',1,'mkl_randbase']]],
+  ['save',['save',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a86c4b056e414a635cc12f6530f74f30c',1,'mklrand::mkl_randbase']]],
   ['std_5fd_5funirand',['std_d_unirand',['../d5/dbe/classstdrand_1_1std__d__unirand.html',1,'stdrand']]],
   ['std_5fd_5funirand',['std_d_unirand',['../d5/dbe/classstdrand_1_1std__d__unirand.html#a17998b305c05b98f2d65fb68cb08514b',1,'stdrand::std_d_unirand']]],
   ['std_5fnormrand',['std_normrand',['../d5/d23/classstdrand_1_1std__normrand.html',1,'stdrand']]],
@@ -10,5 +10,5 @@ var searchData=
   ['stdrand',['stdrand',['../d0/d4b/namespacestdrand.html',1,'']]],
   ['stdrand_2ehpp',['stdrand.hpp',['../d0/d04/stdrand_8hpp.html',1,'']]],
   ['step_5fstate',['step_state',['../d1/d07/namespaceleapfrog.html#a46478ac52554ea9122f5478f7e91484f',1,'leapfrog']]],
-  ['stream',['stream',['../d7/dda/classmkl__randbase.html#a130663e1e2c17ec4a7b77b3c2a6aa1d6',1,'mkl_randbase']]]
+  ['stream',['stream',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a1668b51838583d64b176e159b16bfa7a',1,'mklrand::mkl_randbase']]]
 ];

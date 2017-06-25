@@ -64,7 +64,6 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="../../files.html"><span>File&#160;List</span></a></li>
-      <li><a href="../../globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -88,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">array_alloc.hpp File Reference</div>  </div>
@@ -96,440 +96,50 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 <p><a href="../../dc/df8/array__alloc_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:d8/d6b/namespacearr"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html">arr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acff811ea99d964e00d672cc95026ab15"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:acff811ea99d964e00d672cc95026ab15"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#acff811ea99d964e00d672cc95026ab15">alloc_1darr</a> (int size_m)</td></tr>
-<tr class="memdesc:acff811ea99d964e00d672cc95026ab15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a C array in memory.  <a href="#acff811ea99d964e00d672cc95026ab15">More...</a><br /></td></tr>
-<tr class="separator:acff811ea99d964e00d672cc95026ab15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44be4b8a61e758d0bae645e4ea0d2184"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a44be4b8a61e758d0bae645e4ea0d2184"><td class="memTemplItemLeft" align="right" valign="top">T **&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#a44be4b8a61e758d0bae645e4ea0d2184">alloc_2darr</a> (int size_m, int size_n, bool contig=true)</td></tr>
-<tr class="memdesc:a44be4b8a61e758d0bae645e4ea0d2184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a two-dimensional C array in memory.  <a href="#a44be4b8a61e758d0bae645e4ea0d2184">More...</a><br /></td></tr>
-<tr class="separator:a44be4b8a61e758d0bae645e4ea0d2184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ed16b3c98dbd7a82d0a85e3f594a5a4"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a7ed16b3c98dbd7a82d0a85e3f594a5a4"><td class="memTemplItemLeft" align="right" valign="top">T ***&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#a7ed16b3c98dbd7a82d0a85e3f594a5a4">alloc_3darr</a> (int size_m, int size_n, int size_p, bool contig=true)</td></tr>
-<tr class="memdesc:a7ed16b3c98dbd7a82d0a85e3f594a5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a three-dimensional C array in memory.  <a href="#a7ed16b3c98dbd7a82d0a85e3f594a5a4">More...</a><br /></td></tr>
-<tr class="separator:a7ed16b3c98dbd7a82d0a85e3f594a5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac95d588ace0250532e4f45d43fd5c5f0"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ac95d588ace0250532e4f45d43fd5c5f0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#ac95d588ace0250532e4f45d43fd5c5f0">dealloc_1darr</a> (T *arr)</td></tr>
-<tr class="memdesc:ac95d588ace0250532e4f45d43fd5c5f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deacllocates a standard C array.  <a href="#ac95d588ace0250532e4f45d43fd5c5f0">More...</a><br /></td></tr>
-<tr class="separator:ac95d588ace0250532e4f45d43fd5c5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9783541a0bfc590254a3592037b975f6"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a9783541a0bfc590254a3592037b975f6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#a9783541a0bfc590254a3592037b975f6">dealloc_2darr</a> (int size_m, T **arr, bool contig=true)</td></tr>
-<tr class="memdesc:a9783541a0bfc590254a3592037b975f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deacllocates a 2D C array.  <a href="#a9783541a0bfc590254a3592037b975f6">More...</a><br /></td></tr>
-<tr class="separator:a9783541a0bfc590254a3592037b975f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e2e849a5e7dabd09755a9007c5cf274"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a9e2e849a5e7dabd09755a9007c5cf274"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#a9e2e849a5e7dabd09755a9007c5cf274">dealloc_3darr</a> (int size_m, int size_n, T ***arr, bool contig=true)</td></tr>
-<tr class="memdesc:a9e2e849a5e7dabd09755a9007c5cf274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deacllocates a 3D C array.  <a href="#a9e2e849a5e7dabd09755a9007c5cf274">More...</a><br /></td></tr>
-<tr class="separator:a9e2e849a5e7dabd09755a9007c5cf274"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26c4cf505dfea9f5fde7b76f8db47325"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a26c4cf505dfea9f5fde7b76f8db47325"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#a26c4cf505dfea9f5fde7b76f8db47325">deep_copy_1darr</a> (int size_m, const T *arr)</td></tr>
-<tr class="memdesc:a26c4cf505dfea9f5fde7b76f8db47325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a deep copy of a C array, returning a newly allocated array.  <a href="#a26c4cf505dfea9f5fde7b76f8db47325">More...</a><br /></td></tr>
-<tr class="separator:a26c4cf505dfea9f5fde7b76f8db47325"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae26d53e2054a766bac090431a851c939"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ae26d53e2054a766bac090431a851c939"><td class="memTemplItemLeft" align="right" valign="top">T **&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#ae26d53e2054a766bac090431a851c939">deep_copy_2darr</a> (int size_m, int size_n, const T **arr, bool contig=true)</td></tr>
-<tr class="memdesc:ae26d53e2054a766bac090431a851c939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a deep copy of a 2D C array, returning a newly allocated array.  <a href="#ae26d53e2054a766bac090431a851c939">More...</a><br /></td></tr>
-<tr class="separator:ae26d53e2054a766bac090431a851c939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadc11e4e3bd7909a2c9ca22526fe36f7"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:aadc11e4e3bd7909a2c9ca22526fe36f7"><td class="memTemplItemLeft" align="right" valign="top">T ***&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dc/df8/array__alloc_8hpp.html#aadc11e4e3bd7909a2c9ca22526fe36f7">deep_copy_3darr</a> (int size_m, int size_n, int size_p, const T ***arr, bool contig=true)</td></tr>
-<tr class="memdesc:aadc11e4e3bd7909a2c9ca22526fe36f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a deep copy of a 3D C array, returning a newly allocated array.  <a href="#aadc11e4e3bd7909a2c9ca22526fe36f7">More...</a><br /></td></tr>
-<tr class="separator:aadc11e4e3bd7909a2c9ca22526fe36f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab94d178e99e9c244436d246b66aec11c"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ab94d178e99e9c244436d246b66aec11c"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#ab94d178e99e9c244436d246b66aec11c">arr::alloc_1darr</a> (int size_m)</td></tr>
+<tr class="memdesc:ab94d178e99e9c244436d246b66aec11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a C array in memory.  <a href="../../d8/d6b/namespacearr.html#ab94d178e99e9c244436d246b66aec11c">More...</a><br /></td></tr>
+<tr class="separator:ab94d178e99e9c244436d246b66aec11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a388efc77086be5bf9a1c92271e525584"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a388efc77086be5bf9a1c92271e525584"><td class="memTemplItemLeft" align="right" valign="top">T **&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#a388efc77086be5bf9a1c92271e525584">arr::alloc_2darr</a> (int size_m, int size_n, bool contig=true)</td></tr>
+<tr class="memdesc:a388efc77086be5bf9a1c92271e525584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a two-dimensional C array in memory.  <a href="../../d8/d6b/namespacearr.html#a388efc77086be5bf9a1c92271e525584">More...</a><br /></td></tr>
+<tr class="separator:a388efc77086be5bf9a1c92271e525584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ab84791d1f71b6a60c7839a37c1755f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a4ab84791d1f71b6a60c7839a37c1755f"><td class="memTemplItemLeft" align="right" valign="top">T ***&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#a4ab84791d1f71b6a60c7839a37c1755f">arr::alloc_3darr</a> (int size_m, int size_n, int size_p, bool contig=true)</td></tr>
+<tr class="memdesc:a4ab84791d1f71b6a60c7839a37c1755f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a three-dimensional C array in memory.  <a href="../../d8/d6b/namespacearr.html#a4ab84791d1f71b6a60c7839a37c1755f">More...</a><br /></td></tr>
+<tr class="separator:a4ab84791d1f71b6a60c7839a37c1755f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad87530fd0a5d2ab65b05dda68ec3b6f4"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ad87530fd0a5d2ab65b05dda68ec3b6f4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#ad87530fd0a5d2ab65b05dda68ec3b6f4">arr::dealloc_1darr</a> (T *arr)</td></tr>
+<tr class="memdesc:ad87530fd0a5d2ab65b05dda68ec3b6f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deacllocates a standard C array.  <a href="../../d8/d6b/namespacearr.html#ad87530fd0a5d2ab65b05dda68ec3b6f4">More...</a><br /></td></tr>
+<tr class="separator:ad87530fd0a5d2ab65b05dda68ec3b6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac41ae65f42afc12a69b193b9cdc9a51a"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ac41ae65f42afc12a69b193b9cdc9a51a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#ac41ae65f42afc12a69b193b9cdc9a51a">arr::dealloc_2darr</a> (int size_m, T **arr, bool contig=true)</td></tr>
+<tr class="memdesc:ac41ae65f42afc12a69b193b9cdc9a51a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deacllocates a 2D C array.  <a href="../../d8/d6b/namespacearr.html#ac41ae65f42afc12a69b193b9cdc9a51a">More...</a><br /></td></tr>
+<tr class="separator:ac41ae65f42afc12a69b193b9cdc9a51a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6794a93b6313c90115d7c89f968bc23"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ab6794a93b6313c90115d7c89f968bc23"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#ab6794a93b6313c90115d7c89f968bc23">arr::dealloc_3darr</a> (int size_m, int size_n, T ***arr, bool contig=true)</td></tr>
+<tr class="memdesc:ab6794a93b6313c90115d7c89f968bc23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deacllocates a 3D C array.  <a href="../../d8/d6b/namespacearr.html#ab6794a93b6313c90115d7c89f968bc23">More...</a><br /></td></tr>
+<tr class="separator:ab6794a93b6313c90115d7c89f968bc23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad92c2f90b870d1962efc2429b653a53d"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ad92c2f90b870d1962efc2429b653a53d"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#ad92c2f90b870d1962efc2429b653a53d">arr::deep_copy_1darr</a> (int size_m, const T *arr)</td></tr>
+<tr class="memdesc:ad92c2f90b870d1962efc2429b653a53d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a deep copy of a C array, returning a newly allocated array.  <a href="../../d8/d6b/namespacearr.html#ad92c2f90b870d1962efc2429b653a53d">More...</a><br /></td></tr>
+<tr class="separator:ad92c2f90b870d1962efc2429b653a53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afee25539e73068acab287055e83bc348"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:afee25539e73068acab287055e83bc348"><td class="memTemplItemLeft" align="right" valign="top">T **&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#afee25539e73068acab287055e83bc348">arr::deep_copy_2darr</a> (int size_m, int size_n, const T **arr, bool contig=true)</td></tr>
+<tr class="memdesc:afee25539e73068acab287055e83bc348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a deep copy of a 2D C array, returning a newly allocated array.  <a href="../../d8/d6b/namespacearr.html#afee25539e73068acab287055e83bc348">More...</a><br /></td></tr>
+<tr class="separator:afee25539e73068acab287055e83bc348"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0c6c00318ec78263f8db796eddae2f5"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:af0c6c00318ec78263f8db796eddae2f5"><td class="memTemplItemLeft" align="right" valign="top">T ***&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d8/d6b/namespacearr.html#af0c6c00318ec78263f8db796eddae2f5">arr::deep_copy_3darr</a> (int size_m, int size_n, int size_p, const T ***arr, bool contig=true)</td></tr>
+<tr class="memdesc:af0c6c00318ec78263f8db796eddae2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a deep copy of a 3D C array, returning a newly allocated array.  <a href="../../d8/d6b/namespacearr.html#af0c6c00318ec78263f8db796eddae2f5">More...</a><br /></td></tr>
+<tr class="separator:af0c6c00318ec78263f8db796eddae2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="acff811ea99d964e00d672cc95026ab15"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* alloc_1darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a C array in memory. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the allocated array. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a44be4b8a61e758d0bae645e4ea0d2184"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T** alloc_2darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>contig</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a two-dimensional C array in memory. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array in the first dimension. </td></tr>
-    <tr><td class="paramname">size_n</td><td>The size of the array in the second dimension. </td></tr>
-    <tr><td class="paramname">contig</td><td>A boolean determining if the 2D array is contiguous in memory. Defaults to true. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A double pointer too the 2D array. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a7ed16b3c98dbd7a82d0a85e3f594a5a4"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T*** alloc_3darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>contig</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a three-dimensional C array in memory. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array in the first dimension. </td></tr>
-    <tr><td class="paramname">size_n</td><td>The size of the array in the second dimension. </td></tr>
-    <tr><td class="paramname">size_p</td><td>The size of the array in the third dimension. </td></tr>
-    <tr><td class="paramname">contig</td><td>A boolean determining if the 3D array is contiguous in memory. Defaults to true. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A triple pointer too the 3D array. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac95d588ace0250532e4f45d43fd5c5f0"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void dealloc_1darr </td>
-          <td>(</td>
-          <td class="paramtype">T *&#160;</td>
-          <td class="paramname"><em>arr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Deacllocates a standard C array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">arr</td><td>The array to be deallocated. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a9783541a0bfc590254a3592037b975f6"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void dealloc_2darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T **&#160;</td>
-          <td class="paramname"><em>arr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>contig</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Deacllocates a 2D C array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array in the first dimension. </td></tr>
-    <tr><td class="paramname">arr</td><td>The array to be deallocated. </td></tr>
-    <tr><td class="paramname">contig</td><td>Was the array allocated contiguously? Defaults to true. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a9e2e849a5e7dabd09755a9007c5cf274"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void dealloc_3darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T ***&#160;</td>
-          <td class="paramname"><em>arr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>contig</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Deacllocates a 3D C array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array in the first dimension. </td></tr>
-    <tr><td class="paramname">size_n</td><td>The size of the array in the second dimension. </td></tr>
-    <tr><td class="paramname">arr</td><td>The array to be deallocated. </td></tr>
-    <tr><td class="paramname">contig</td><td>Was the array allocated contiguously? Defaults to true. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a26c4cf505dfea9f5fde7b76f8db47325"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* deep_copy_1darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T *&#160;</td>
-          <td class="paramname"><em>arr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Performs a deep copy of a C array, returning a newly allocated array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array to be copied. </td></tr>
-    <tr><td class="paramname">arr</td><td>The array to be copied. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to a newly allocated C array where each element matches the input array. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ae26d53e2054a766bac090431a851c939"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T** deep_copy_2darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T **&#160;</td>
-          <td class="paramname"><em>arr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>contig</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Performs a deep copy of a 2D C array, returning a newly allocated array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array to be copied in the first dimension. </td></tr>
-    <tr><td class="paramname">size_n</td><td>The size of the array to be copied in the second dimension. </td></tr>
-    <tr><td class="paramname">arr</td><td>The array to be copied. </td></tr>
-    <tr><td class="paramname">contig</td><td>Should the new array be allocated contiguously? </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to a newly allocated C array where each element matches the input array. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aadc11e4e3bd7909a2c9ca22526fe36f7"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T*** deep_copy_3darr </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size_p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T ***&#160;</td>
-          <td class="paramname"><em>arr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>contig</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Performs a deep copy of a 3D C array, returning a newly allocated array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size_m</td><td>The size of the array to be copied in the first dimension. </td></tr>
-    <tr><td class="paramname">size_n</td><td>The size of the array to be copied in the second dimension. </td></tr>
-    <tr><td class="paramname">size_p</td><td>The size of the array to be copied in the third dimension. </td></tr>
-    <tr><td class="paramname">arr</td><td>The array to be copied. </td></tr>
-    <tr><td class="paramname">contig</td><td>Should the new array be allocated contiguously? </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to a newly allocated C array where each element matches the input array. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,0 +1,6 @@
+<map id="mklrand::mkl_randbase" name="mklrand::mkl_randbase">
+<area shape="rect" id="node2" href="$de/dcd/classmklrand_1_1mkl__drand.html" title="Generator for uniform numbers between 0 and 1. " alt="" coords="5,80,141,107"/>
+<area shape="rect" id="node3" href="$d8/ded/classmklrand_1_1mkl__irand.html" title="Generator for uniform numbers either 0 or 1. " alt="" coords="166,80,298,107"/>
+<area shape="rect" id="node4" href="$d0/d77/classmklrand_1_1mkl__lnrand.html" title="Generator for random numbers on a lognormal distribution. " alt="" coords="323,80,461,107"/>
+<area shape="rect" id="node5" href="$d0/db9/classmklrand_1_1mkl__nrand.html" title="Generator for random numbers on a normal distribution. " alt="" coords="485,80,621,107"/>
+</map>
