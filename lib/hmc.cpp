@@ -5,7 +5,7 @@
 #include <cmath>
 
 bool hmc::accept_trial( const double e, const double e_trial,
-                         mkl_drand &rng )
+                         mklrand::mkl_drand &rng )
 {
     double e_diff = e_trial - e;
     double acceptance_threshold = std::exp( -e_diff );
@@ -47,8 +47,8 @@ std::vector<std::valarray<double> > hmc::hmc(
     std::valarray<double> work( system_size );
 
     // Allocate RNGs
-    mkl_drand uniform_rng( 100000, 1001 );
-    mkl_nrand normal_rng( 0, 1, 100000, 555555 );
+    mklrand::mkl_drand uniform_rng( 100000, 1001 );
+    mklrand::mkl_nrand normal_rng( 0, 1, 100000, 555555 );
 
     // Total energy
     std::function<double(const std::valarray<double>&, const std::valarray<double>&)>
