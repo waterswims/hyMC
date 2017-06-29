@@ -1,6 +1,9 @@
 # Use intel compiler
 CXX=icpc
 
+# Get the compiler
+OS := $(shell uname)
+
 # Specify subdirectories for source and objects
 INC_PATH=include
 OBJ_PATH=objects
@@ -12,7 +15,12 @@ GTEST_FLAGS=-isystem $(GTEST_DIR)/include
 
 # C flags
 CXXFLAGS=--std=c++11 -W -Wall -pedantic -O3 -g -DMKL_ILP64 -I$(MKLROOT)/include -use-intel-optimized-headers
+# OS dependent flags
+ifeq ($(OS),Darwin)
+LDLIBS=-use-intel-optimized-headers ${MKLROOT}/lib/libmkl_intel_ilp64.a ${MKLROOT}/lib/libmkl_sequential.a ${MKLROOT}/lib/libmkl_core.a -lpthread -lm -ldl
+else
 LDLIBS=-use-intel-optimized-headers -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_ilp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+endif
 
 # Collect all the library source files from the library director
 LIB_SOURCES=$(wildcard $(LIB_PATH)/*.cpp)

@@ -5,3 +5,4 @@ objects/*
 runtests
 notebooks/.ipynb_checkpoints/*
 docs/*
+*.dSYM
