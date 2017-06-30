@@ -42,11 +42,11 @@ std::vector<std::valarray<double> > hmc::trig_left_up(const std::valarray<double
 }
 
 std::function<double(const std::valarray<double>&)>
-    hmc::gen_total_energy_1d(std::vector<bool> E_flags)
+    hmc::gen_total_energy_2d(std::vector<bool> E_flags)
 {
     // Init blank energy function
     std::function<double(const std::vector<std::valarray<double> >&)> init_f =
-        [](const std::valarray<double>& data){return 0;};
+        [](const std::vector<std::valarray<double> >& data){return 0;};
     std::function<double(const std::vector<std::valarray<double> >&)> new_f;
 
     // Add exchange energy
@@ -54,7 +54,7 @@ std::function<double(const std::valarray<double>&)>
     {
         new_f =
             [init_f](const std::vector<std::valarray<double> >& data)
-            {return init_f(data) + exchange_energy_1d(data);};
+            {return init_f(data) + exchange_energy_2d(data);};
         init_f = new_f;
     }
 
@@ -64,7 +64,7 @@ std::function<double(const std::valarray<double>&)>
         {
             std::vector<std::valarray<double> > trigs = trig_left_up(data);
             return init_f(trigs);
-        }
+        };
 
     return final_f;
 }
