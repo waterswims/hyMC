@@ -40,6 +40,21 @@ namespace hmc
     ///         sin(phi_up)
     ///////////////////////////////////////////////////////////////////////////
     std::vector<std::valarray<double> > trig_left_up(const std::valarray<double> data);
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Generates the total energy function for a 2D system.
+    ///
+    /// Returns a std::function object of the form double
+    /// f(const std::valarray<double>&) which calculates and returns
+    /// the total energy of a 2D system. A reference to the input data is
+    /// passed as the parameter.
+    ///
+    /// \param E_flags A vector of switches which determines the which energy
+    ///                terms to turn on. The first boolean eneables the
+    ///                exchange energy.
+    ///////////////////////////////////////////////////////////////////////////
+    std::function<double(const std::valarray<double>&)>
+        gen_total_energy_2d(std::vector<bool> E_flags);
 }
 
 #endif
