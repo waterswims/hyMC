@@ -104,7 +104,7 @@ TEST(Hamiltonian_2d, exchange_specific)
 
     E_flags[0] = true;
     E_func = hmc::gen_total_energy_2d(E_flags);
-    EXPECT_NEAR(hmc::exchange_energy_2d(E_input), 3.4939748074272869,
+    EXPECT_NEAR(E_func(test_spins), 3.4939748074272869,
                                         3.4939748074272869*1e-15);
 
     E_flags[0] = false;
