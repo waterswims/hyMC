@@ -82,7 +82,7 @@ TEST(Hamiltonian_2d, exchange_specific)
                                         3.4939748074272869*1e-15);
 }
 
-TEST(Hamiltonian_2d, exchange_specific)
+TEST(Hamiltonian_2d, total_energy)
 {
     int size = 4;
     std::valarray<double> test_spins(size*2);
