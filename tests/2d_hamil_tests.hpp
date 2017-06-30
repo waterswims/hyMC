@@ -60,4 +60,26 @@ TEST(Hamiltonian_2d, exchange_antialligned)
     EXPECT_NEAR(hmc::exchange_energy_2d(E_input), 2*tsize, 2*tsize*1e-15);
 }
 
+TEST(Hamiltonian_2d, exchange_specific)
+{
+    int size = 4;
+    std::valarray<double> test_spins(size*2);
+
+    test_spins[0] = 0.3;
+    test_spins[4] = 2.3;
+
+    test_spins[1] = 1.6;
+    test_spins[5] = 0.1;
+
+    test_spins[2] = 5.2;
+    test_spins[6] = 1.1;
+
+    test_spins[3] = 3.4;
+    test_spins[7] = 2.1;
+
+    std::vector<std::valarray<double> > E_input = hmc::trig_left_up(test_spins);
+    EXPECT_NEAR(hmc::exchange_energy_2d(E_input), 3.4939748074272869,
+                                        3.4939748074272869*1e-15);
+}
+
 #endif
