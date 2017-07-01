@@ -28,6 +28,41 @@ TEST(Hamiltonian_2d, trig_left_up)
     EXPECT_NEAR(test[11][1], 1, 1e-6);
 }
 
+TEST(Hamiltonian_2d, trig_lrud)
+{
+    int tsize = 9;
+    double pi = 3.14159265359;
+    std::valarray<double> test_spins(tsize*2);
+    test_spins = 1.5;
+    test_spins[4] = pi / 2;
+    test_spins[16] = pi / 2;
+
+    std::vector<std::valarray<double> > test = hmc::trig_left_up(test_spins);
+    EXPECT_NEAR(test[0][4], 0, 1e-6);
+    EXPECT_NEAR(test[1][5], 0, 1e-6);
+    EXPECT_NEAR(test[2][3], 0, 1e-6);
+    EXPECT_NEAR(test[3][7], 0, 1e-6);
+    EXPECT_NEAR(test[4][1], 0, 1e-6);
+
+    EXPECT_NEAR(test[5][4], 1, 1e-6);
+    EXPECT_NEAR(test[6][5], 1, 1e-6);
+    EXPECT_NEAR(test[7][3], 1, 1e-6);
+    EXPECT_NEAR(test[8][7], 1, 1e-6);
+    EXPECT_NEAR(test[9][1], 1, 1e-6);
+
+    EXPECT_NEAR(test[10][7], 0, 1e-6);
+    EXPECT_NEAR(test[11][8], 0, 1e-6);
+    EXPECT_NEAR(test[12][6], 0, 1e-6);
+    EXPECT_NEAR(test[13][1], 0, 1e-6);
+    EXPECT_NEAR(test[14][4], 0, 1e-6);
+
+    EXPECT_NEAR(test[15][7], 1, 1e-6);
+    EXPECT_NEAR(test[16][8], 1, 1e-6);
+    EXPECT_NEAR(test[17][6], 1, 1e-6);
+    EXPECT_NEAR(test[18][1], 1, 1e-6);
+    EXPECT_NEAR(test[19][4], 1, 1e-6);
+}
+
 TEST(Hamiltonian_2d, exchange_alligned)
 {
     int size = 4;
