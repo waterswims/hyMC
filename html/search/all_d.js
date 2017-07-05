@@ -1,11 +1,14 @@
 var searchData=
 [
-  ['_7emkl_5fdrand',['~mkl_drand',['../de/dcd/classmklrand_1_1mkl__drand.html#a4f6c0055cee5c0e5b9a82d95274bd0f5',1,'mklrand::mkl_drand']]],
-  ['_7emkl_5firand',['~mkl_irand',['../d8/ded/classmklrand_1_1mkl__irand.html#a2febc3efc937b26f8cdb393a5f7735e5',1,'mklrand::mkl_irand']]],
-  ['_7emkl_5flnrand',['~mkl_lnrand',['../d0/d77/classmklrand_1_1mkl__lnrand.html#adb4d71f9ee8992fa1e595af7ec7005c3',1,'mklrand::mkl_lnrand']]],
-  ['_7emkl_5fnrand',['~mkl_nrand',['../d0/db9/classmklrand_1_1mkl__nrand.html#a67713eaa809de90c1309ed58883b9b0f',1,'mklrand::mkl_nrand']]],
-  ['_7emkl_5frandbase',['~mkl_randbase',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a696e5a448c313959a55d21a02193a745',1,'mklrand::mkl_randbase']]],
-  ['_7estd_5fd_5funirand',['~std_d_unirand',['../d5/dbe/classstdrand_1_1std__d__unirand.html#a37784d8dca5fff875a77224b68cc931b',1,'stdrand::std_d_unirand']]],
-  ['_7estd_5fnormrand',['~std_normrand',['../d5/d23/classstdrand_1_1std__normrand.html#aec1727d2023b6acc65a4057a71ee642a',1,'stdrand::std_normrand']]],
-  ['_7estd_5frandbase',['~std_randbase',['../db/d79/classstdrand_1_1std__randbase.html#a5280080005689ab2ff6dae6de10a3faa',1,'stdrand::std_randbase']]]
+  ['save',['save',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a86c4b056e414a635cc12f6530f74f30c',1,'mklrand::mkl_randbase']]],
+  ['std_5fd_5funirand',['std_d_unirand',['../d5/dbe/classstdrand_1_1std__d__unirand.html',1,'stdrand']]],
+  ['std_5fd_5funirand',['std_d_unirand',['../d5/dbe/classstdrand_1_1std__d__unirand.html#a17998b305c05b98f2d65fb68cb08514b',1,'stdrand::std_d_unirand']]],
+  ['std_5fnormrand',['std_normrand',['../d5/d23/classstdrand_1_1std__normrand.html',1,'stdrand']]],
+  ['std_5fnormrand',['std_normrand',['../d5/d23/classstdrand_1_1std__normrand.html#a2cb06e8547d4475a424d213cda700ad7',1,'stdrand::std_normrand']]],
+  ['std_5frandbase',['std_randbase',['../db/d79/classstdrand_1_1std__randbase.html#a8298d43186d6410f30ec0a77f0b90159',1,'stdrand::std_randbase']]],
+  ['std_5frandbase',['std_randbase',['../db/d79/classstdrand_1_1std__randbase.html',1,'stdrand']]],
+  ['stdrand',['stdrand',['../d0/d4b/namespacestdrand.html',1,'']]],
+  ['stdrand_2ehpp',['stdrand.hpp',['../d0/d04/stdrand_8hpp.html',1,'']]],
+  ['step_5fstate',['step_state',['../d1/d07/namespaceleapfrog.html#a46478ac52554ea9122f5478f7e91484f',1,'leapfrog']]],
+  ['stream',['stream',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a1668b51838583d64b176e159b16bfa7a',1,'mklrand::mkl_randbase']]]
 ];

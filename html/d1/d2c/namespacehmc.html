@@ -99,6 +99,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ae4af766373c2b95953c1aaad5ac5e8ee"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#ae4af766373c2b95953c1aaad5ac5e8ee">exchange_energy_1d</a> (const std::valarray&lt; double &gt; &amp;data)</td></tr>
 <tr class="memdesc:ae4af766373c2b95953c1aaad5ac5e8ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the exchange energy of a 1D system.  <a href="#ae4af766373c2b95953c1aaad5ac5e8ee">More...</a><br /></td></tr>
 <tr class="separator:ae4af766373c2b95953c1aaad5ac5e8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5d583baecd9bc018d341eba7a84c86e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#aa5d583baecd9bc018d341eba7a84c86e">exchange_energy_2d</a> (const std::vector&lt; std::valarray&lt; double &gt; &gt; &amp;trig_angles)</td></tr>
+<tr class="memdesc:aa5d583baecd9bc018d341eba7a84c86e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the exchange energy of a 2D system.  <a href="#aa5d583baecd9bc018d341eba7a84c86e">More...</a><br /></td></tr>
+<tr class="separator:aa5d583baecd9bc018d341eba7a84c86e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ff4a7a7322d6556d9881abb1c3c1f0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#a2ff4a7a7322d6556d9881abb1c3c1f0d">exchange_grad_2d</a> (std::valarray&lt; double &gt; &amp;grad_out, const std::vector&lt; std::valarray&lt; double &gt; &gt; &amp;trig_angles)</td></tr>
+<tr class="memdesc:a2ff4a7a7322d6556d9881abb1c3c1f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the gradient of the exchange energy of a 1D system.  <a href="#a2ff4a7a7322d6556d9881abb1c3c1f0d">More...</a><br /></td></tr>
+<tr class="separator:a2ff4a7a7322d6556d9881abb1c3c1f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06094e82305669dc9a7c5c0a1deb503"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::valarray&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#ad06094e82305669dc9a7c5c0a1deb503">trig_left_up</a> (const std::valarray&lt; double &gt; data)</td></tr>
+<tr class="memdesc:ad06094e82305669dc9a7c5c0a1deb503"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the cosine and sine of the spin angles and then shifts them left and up.  <a href="#ad06094e82305669dc9a7c5c0a1deb503">More...</a><br /></td></tr>
+<tr class="separator:ad06094e82305669dc9a7c5c0a1deb503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723ab799cc7a30db719997273d3674d0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::valarray&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#a723ab799cc7a30db719997273d3674d0">trig_lrud</a> (const std::valarray&lt; double &gt; data)</td></tr>
+<tr class="memdesc:a723ab799cc7a30db719997273d3674d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the cosine and sine of the spin angles and then shifts them left, right, up and down.  <a href="#a723ab799cc7a30db719997273d3674d0">More...</a><br /></td></tr>
+<tr class="separator:a723ab799cc7a30db719997273d3674d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad5f236c40a3e261d90764bc0ee387e0"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aad5f236c40a3e261d90764bc0ee387e0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#aad5f236c40a3e261d90764bc0ee387e0">_swap_ptrs</a> (T *&amp;a, T *&amp;b)</td></tr>
 <tr class="separator:aad5f236c40a3e261d90764bc0ee387e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,6 +129,12 @@ Variables</h2></td></tr>
 <tr class="memitem:ab9aab2f088de385db6969673bff3e7e3"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(const std::valarray&lt; double &gt; &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#ab9aab2f088de385db6969673bff3e7e3">gen_total_energy_1d</a> (std::vector&lt; bool &gt; E_flags)</td></tr>
 <tr class="memdesc:ab9aab2f088de385db6969673bff3e7e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the total energy function for a 1D system.  <a href="#ab9aab2f088de385db6969673bff3e7e3">More...</a><br /></td></tr>
 <tr class="separator:ab9aab2f088de385db6969673bff3e7e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf53be4b1fb15386e20631a489d3a2ab"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(std::valarray&lt; double &gt; &amp;, const std::valarray&lt; double &gt; &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#aaf53be4b1fb15386e20631a489d3a2ab">gen_total_grad_2d</a> (std::vector&lt; bool &gt; E_flags)</td></tr>
+<tr class="memdesc:aaf53be4b1fb15386e20631a489d3a2ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the total gradient function for a 2D system.  <a href="#aaf53be4b1fb15386e20631a489d3a2ab">More...</a><br /></td></tr>
+<tr class="separator:aaf53be4b1fb15386e20631a489d3a2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6230de5e4df5a1f66d7b83c04719010"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(const std::valarray&lt; double &gt; &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#ae6230de5e4df5a1f66d7b83c04719010">gen_total_energy_2d</a> (std::vector&lt; bool &gt; E_flags)</td></tr>
+<tr class="memdesc:ae6230de5e4df5a1f66d7b83c04719010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the total energy function for a 2D system.  <a href="#ae6230de5e4df5a1f66d7b83c04719010">More...</a><br /></td></tr>
+<tr class="separator:ae6230de5e4df5a1f66d7b83c04719010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="aad5f236c40a3e261d90764bc0ee387e0"></a>
@@ -204,6 +222,31 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="aa5d583baecd9bc018d341eba7a84c86e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double hmc::exchange_energy_2d </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::valarray&lt; double &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>trig_angles</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the exchange energy of a 2D system. </p>
+<p>Calculates the standard Heisenberg exchange energy <img class="formulaInl" alt="$\sum_{ij} J_{ij} \mathbf{s}_i\cdot\mathbf{s}_j $" src="../../form_2.png"/> where <img class="formulaInl" alt="$J_{ij} =$" src="../../form_3.png"/> -1 for neighbouring spins and 0 for other pairs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trig_angles</td><td>Vector of the trigonometric transformations of the angles of the spins ordered as: cos(theta), cos(theta_left), cos(theta_up), sin(theta), sin(theta_left), sin(theta_up), cos(phi), cos(phi_left), cos(phi_up), sin(phi), sin(phi_left), sin(phi_up) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a8f26f0cad5eaea57e8257190f1a8e52f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -233,6 +276,42 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Reference to the valarray where the input data is stored. The first half of the array is the ordered list of azimuthal angles <img class="formulaInl" alt="$\theta$" src="../../form_4.png"/> and the second half is the ordered list of polar angles <img class="formulaInl" alt="$\phi$" src="../../form_5.png"/> of each spin. </td></tr>
+    <tr><td class="paramname">grad_out</td><td>Reference to the valarray where the output gradient will be stored. The gradient is stored as the element wise derivitive of data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2ff4a7a7322d6556d9881abb1c3c1f0d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hmc::exchange_grad_2d </td>
+          <td>(</td>
+          <td class="paramtype">std::valarray&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>grad_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::valarray&lt; double &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>trig_angles</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the gradient of the exchange energy of a 1D system. </p>
+<p>Calculates the gradient <img class="formulaInl" alt="$\partial/\partial \theta$" src="../../form_0.png"/> and <img class="formulaInl" alt="$\partial/\partial \phi$" src="../../form_1.png"/> of the standard Heisenberg exchange energy <img class="formulaInl" alt="$\sum_{ij} J_{ij} \mathbf{s}_i\cdot\mathbf{s}_j $" src="../../form_2.png"/> where <img class="formulaInl" alt="$J_{ij} =$" src="../../form_3.png"/> -1 for neighbouring spins and 0 for other pairs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trig_angles</td><td>Vector of the trigonometric transformations of the angles of the spins ordered as: cos(theta), sin(theta), cos(phi), sin(phi), each angle given as current, left, right, up, down. </td></tr>
     <tr><td class="paramname">grad_out</td><td>Reference to the valarray where the output gradient will be stored. The gradient is stored as the element wise derivitive of data. </td></tr>
   </table>
   </dd>
@@ -318,6 +397,56 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ad06094e82305669dc9a7c5c0a1deb503"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::valarray&lt;double&gt; &gt; hmc::trig_left_up </td>
+          <td>(</td>
+          <td class="paramtype">const std::valarray&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the cosine and sine of the spin angles and then shifts them left and up. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Reference to the valarray where the input data is stored. The first half of the array is the ordered list of azimuthal angles <img class="formulaInl" alt="$\theta$" src="../../form_4.png"/> and the second half is the ordered list of polar angles <img class="formulaInl" alt="$\phi$" src="../../form_5.png"/> of each spin.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of the trigonometric transformations of the angles of the spins ordered as: cos(theta), cos(theta_left), cos(theta_up), sin(theta), sin(theta_left), sin(theta_up), cos(phi), cos(phi_left), cos(phi_up), sin(phi), sin(phi_left), sin(phi_up) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a723ab799cc7a30db719997273d3674d0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::valarray&lt;double&gt; &gt; hmc::trig_lrud </td>
+          <td>(</td>
+          <td class="paramtype">const std::valarray&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the cosine and sine of the spin angles and then shifts them left, right, up and down. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Reference to the valarray where the input data is stored. The first half of the array is the ordered list of azimuthal angles <img class="formulaInl" alt="$\theta$" src="../../form_4.png"/> and the second half is the ordered list of polar angles <img class="formulaInl" alt="$\phi$" src="../../form_5.png"/> of each spin.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of the trigonometric transformations of the angles of the spins ordered as: cos(theta): (asis, left, right, up, down), sin(theta): (asis, left, right, up, down), cos(phi): (asis, left, right, up, down), sin(phi): (asis, left, right, up, down) </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="ab9aab2f088de385db6969673bff3e7e3"></a>
 <div class="memitem">
@@ -340,6 +469,27 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ae6230de5e4df5a1f66d7b83c04719010"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt;double(const std::valarray&lt;double&gt;&amp;)&gt; hmc::gen_total_energy_2d(std::vector&lt; bool &gt; E_flags)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates the total energy function for a 2D system. </p>
+<p>Returns a std::function object of the form double f(const std::valarray&lt;double&gt;&amp;) which calculates and returns the total energy of a 2D system. A reference to the input data is passed as the parameter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">E_flags</td><td>A vector of switches which determines the which energy terms to turn on. The first boolean eneables the exchange energy. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a7ed1a14e693efc66d10bf098b9f3caab"></a>
 <div class="memitem">
 <div class="memproto">
@@ -352,6 +502,27 @@ template&lt;typename T &gt; </div>
 
 <p>Generates the total gradient function for a 1D system. </p>
 <p>Returns a std::function object of the form void f(std::valarray&lt;double&gt;&amp;, const std::valarray&lt;double&gt;&amp;) which calculates the total gradient of a 1D system. A reference to the output gradient is passed as the first parameter and a reference to the input data is passed as the second parameter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">E_flags</td><td>A vector of switches which determines the which energy gradients to turn on. The first boolean eneables the exchange energy gradient. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aaf53be4b1fb15386e20631a489d3a2ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt;void(std::valarray&lt;double&gt;&amp;, const std::valarray&lt;double&gt;&amp;)&gt; hmc::gen_total_grad_2d(std::vector&lt; bool &gt; E_flags)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates the total gradient function for a 2D system. </p>
+<p>Returns a std::function object of the form void f(std::valarray&lt;double&gt;&amp;, const std::valarray&lt;double&gt;&amp;) which calculates the total gradient of a 2D system. A reference to the output gradient is passed as the first parameter and a reference to the input data is passed as the second parameter.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">E_flags</td><td>A vector of switches which determines the which energy gradients to turn on. The first boolean eneables the exchange energy gradient. </td></tr>
