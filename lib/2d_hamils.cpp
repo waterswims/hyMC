@@ -1,5 +1,6 @@
 #include "../include/2d_hamils.hpp"
 #include <cmath>
+#include <iostream>
 
 double hmc::exchange_energy_2d(const std::vector<std::valarray<double> >& trig_angles)
 {
@@ -12,6 +13,65 @@ double hmc::exchange_energy_2d(const std::vector<std::valarray<double> >& trig_a
                   trig_angles[5] * trig_angles[11])).sum();
 
     return -(t1 + t2 + t3);
+}
+
+void hmc::exchange_grad_2d(std::valarray<double>& grad_out,
+    const std::vector<std::valarray<double> >& trig_angles)
+{
+    int halfsize = trig_angles[0].size();
+    std::slice tslice(0, halfsize, 1);
+    std::slice pslice(halfsize, halfsize, 1);
+    std::valarray<double> t1, t2, t3;
+
+    t1 = -trig_angles[5] * trig_angles[15] * (trig_angles[1] * trig_angles[16] +
+        trig_angles[2] * trig_angles[17] + trig_angles[3] * trig_angles[18] +
+        trig_angles[4] * trig_angles[19]);
+    t2 = trig_angles[0] * trig_angles[15] * (trig_angles[6] * trig_angles[16] +
+        trig_angles[7] * trig_angles[17] + trig_angles[8] * trig_angles[18] +
+        trig_angles[9] * trig_angles[19]);
+
+    grad_out[tslice] += t1 + t2;
+
+    t1 = -trig_angles[15] * (trig_angles[11] + trig_angles[12] + trig_angles[13] +
+                             trig_angles[14]);
+    t2 = trig_angles[0] * trig_angles[10] * (trig_angles[1] * trig_angles[16] +
+        trig_angles[2] * trig_angles[17] + trig_angles[3] * trig_angles[18] +
+        trig_angles[4] * trig_angles[19]);
+    t3 = trig_angles[10] * trig_angles[5] * (trig_angles[6] * trig_angles[16] +
+        trig_angles[7] * trig_angles[17] + trig_angles[8] * trig_angles[18] +
+        trig_angles[9] * trig_angles[19]);
+
+    grad_out[pslice] += t1 + t2 + t3;
+}
+
+std::function<void(std::valarray<double>&, const std::valarray<double>&)>
+    hmc::gen_total_grad_2d(std::vector<bool> E_flags)
+{
+    // Init blank grad function
+    std::function<void(std::valarray<double>&, const std::vector<std::valarray<double> >&)> init_f, new_f;
+    init_f = [](std::valarray<double>& grad_out, const std::vector<std::valarray<double> >& data)
+        {grad_out = 0;};
+
+    // Add Exchange gradient
+    if(E_flags[0])
+    {
+        new_f = [init_f](std::valarray<double>& grad_out, const std::vector<std::valarray<double> >& data)
+            {
+                init_f(grad_out, data);
+                exchange_grad_2d(grad_out, data);
+            };
+        init_f = new_f;
+    }
+
+    // Find trigs and finalise
+    std::function<void(std::valarray<double>&, const std::valarray<double>&)> final_f =
+        [init_f](std::valarray<double>& grad_out, const std::valarray<double>& data)
+        {
+            std::vector<std::valarray<double> > trigs = trig_lrud(data);
+            init_f(grad_out, trigs);
+        };
+
+    return final_f;
 }
 
 std::vector<std::valarray<double> > hmc::trig_left_up(const std::valarray<double> data)
