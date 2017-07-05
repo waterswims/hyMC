@@ -24,6 +24,41 @@ namespace hmc
     double exchange_energy_2d(const std::vector<std::valarray<double> >& trig_angles);
 
     ///////////////////////////////////////////////////////////////////////////
+    /// \brief Calculates the gradient of the exchange energy of a 1D system.
+    ///
+    /// Calculates the gradient \f$\partial/\partial \theta\f$ and
+    /// \f$\partial/\partial \phi\f$ of the standard Heisenberg exchange energy
+    /// \f$\sum_{ij} J_{ij} \mathbf{s}_i\cdot\mathbf{s}_j \f$ where
+    /// \f$J_{ij} =\f$ -1 for neighbouring spins and 0 for other pairs.
+    ///
+    /// \param trig_angles Vector of the trigonometric transformations of the
+    ///                    angles of the spins ordered as: cos(theta),
+    ///                    sin(theta), cos(phi), sin(phi), each angle given as
+    ///                    current, left, right, up, down.
+    /// \param grad_out Reference to the valarray where the output gradient
+    ///                 will be stored. The gradient is stored as the element
+    ///                 wise derivitive of data.
+    ///////////////////////////////////////////////////////////////////////////
+    void exchange_grad_2d(std::valarray<double>& grad_out,
+        const std::vector<std::valarray<double> >& trig_angles);
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Generates the total gradient function for a 2D system.
+    ///
+    /// Returns a std::function object of the form void
+    /// f(std::valarray<double>&, const std::valarray<double>&) which calculates
+    /// the total gradient of a 2D system. A reference to the output gradient is
+    /// passed as the first parameter and a reference to the input data is
+    /// passed as the second parameter.
+    ///
+    /// \param E_flags A vector of switches which determines the which energy
+    ///                gradients to turn on. The first boolean eneables the
+    ///                exchange energy gradient.
+    ///////////////////////////////////////////////////////////////////////////
+    std::function<void(std::valarray<double>&, const std::valarray<double>&)>
+        gen_total_grad_2d(std::vector<bool> E_flags);
+
+    ///////////////////////////////////////////////////////////////////////////
     /// \brief Calculates the cosine and sine of the spin angles and then shifts
     ///        them left and up.
     ///

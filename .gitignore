@@ -6,3 +6,4 @@ runtests
 notebooks/.ipynb_checkpoints/*
 docs/*
 *.dSYM
+.DS_Store

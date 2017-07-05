@@ -37,7 +37,7 @@ TEST(Hamiltonian_2d, trig_lrud)
     test_spins[4] = pi / 2;
     test_spins[16] = pi / 2;
 
-    std::vector<std::valarray<double> > test = hmc::trig_left_up(test_spins);
+    std::vector<std::valarray<double> > test = hmc::trig_lrud(test_spins);
     EXPECT_NEAR(test[0][4], 0, 1e-6);
     EXPECT_NEAR(test[1][5], 0, 1e-6);
     EXPECT_NEAR(test[2][3], 0, 1e-6);
@@ -145,6 +145,83 @@ TEST(Hamiltonian_2d, total_energy)
     E_flags[0] = false;
     E_func = hmc::gen_total_energy_2d(E_flags);
     EXPECT_EQ(E_func(test_spins), 0);
+}
+
+TEST(Hamiltonian_2d, exchange_grad)
+{
+    int size = 4;
+    std::valarray<double> test_spins(size*2);
+
+    test_spins[0] = 0.3;
+    test_spins[4] = 2.3;
+
+    test_spins[1] = 1.6;
+    test_spins[5] = 0.1;
+
+    test_spins[2] = 5.2;
+    test_spins[6] = 1.1;
+
+    test_spins[3] = 3.4;
+    test_spins[7] = 2.1;
+
+    std::valarray<double> grad(size*2);
+    grad = 0;
+    std::vector<std::valarray<double> > g_input = hmc::trig_lrud(test_spins);
+    hmc::exchange_grad_2d(grad, g_input);
+    EXPECT_NEAR(grad[0], -1.1623660509440559, 1.1623660509440559*1e-15);
+    EXPECT_NEAR(grad[1], 0.024380126112986563, 0.024380126112986563*1e-15);
+    EXPECT_NEAR(grad[2], -0.19252639008304462, 0.19252639008304462*1e-15);
+    EXPECT_NEAR(grad[3], 1.3305123149141138, 1.3305123149141138*1e-15);
+    EXPECT_NEAR(grad[4], -2.4175421944456765, 2.4175421944456765*1e-15);
+    EXPECT_NEAR(grad[5], 0.24050534024646605, 0.24050534024646605*1e-15);
+    EXPECT_NEAR(grad[6], 2.0356793154147046, 2.0356793154147046*1e-15);
+    EXPECT_NEAR(grad[7], -2.2735417704169287, 2.2735417704169287*1e-15);
+}
+
+TEST(Hamiltonian_2d, total_grad)
+{
+    int size = 4;
+    std::valarray<double> test_spins(size*2);
+
+    test_spins[0] = 0.3;
+    test_spins[4] = 2.3;
+
+    test_spins[1] = 1.6;
+    test_spins[5] = 0.1;
+
+    test_spins[2] = 5.2;
+    test_spins[6] = 1.1;
+
+    test_spins[3] = 3.4;
+    test_spins[7] = 2.1;
+
+    std::valarray<double> grad(size*2);
+    std::vector<bool> E_flags(1);
+    std::function<void(std::valarray<double>&, const std::valarray<double>&)> g_func;
+
+    E_flags[0] = true;
+    g_func = hmc::gen_total_grad_2d(E_flags);
+    g_func(grad, test_spins);
+    EXPECT_NEAR(grad[0], -1.1623660509440559, 1.1623660509440559*1e-15);
+    EXPECT_NEAR(grad[1], 0.024380126112986563, 0.024380126112986563*1e-15);
+    EXPECT_NEAR(grad[2], -0.19252639008304462, 0.19252639008304462*1e-15);
+    EXPECT_NEAR(grad[3], 1.3305123149141138, 1.3305123149141138*1e-15);
+    EXPECT_NEAR(grad[4], -2.4175421944456765, 2.4175421944456765*1e-15);
+    EXPECT_NEAR(grad[5], 0.24050534024646605, 0.24050534024646605*1e-15);
+    EXPECT_NEAR(grad[6], 2.0356793154147046, 2.0356793154147046*1e-15);
+    EXPECT_NEAR(grad[7], -2.2735417704169287, 2.2735417704169287*1e-15);
+
+    E_flags[0] = false;
+    g_func = hmc::gen_total_grad_2d(E_flags);
+    g_func(grad, test_spins);
+    EXPECT_EQ(grad[0], 0);
+    EXPECT_EQ(grad[1], 0);
+    EXPECT_EQ(grad[2], 0);
+    EXPECT_EQ(grad[3], 0);
+    EXPECT_EQ(grad[4], 0);
+    EXPECT_EQ(grad[5], 0);
+    EXPECT_EQ(grad[6], 0);
+    EXPECT_EQ(grad[7], 0);
 }
 
 #endif
