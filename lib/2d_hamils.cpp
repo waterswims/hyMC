@@ -1,6 +1,5 @@
 #include "../include/2d_hamils.hpp"
 #include <cmath>
-#include <iostream>
 
 double hmc::exchange_energy_2d(const std::vector<std::valarray<double> >& trig_angles)
 {
@@ -83,8 +82,8 @@ std::vector<std::valarray<double> > hmc::trig_left_up(const std::valarray<double
 
     std::gslice full_left_slice(0, {size, size-1}, {size, 1});
     std::gslice full_right_slice(1, {size, size-1}, {size, 1});
-    std::gslice left_slice(0, {size, 1}, {size, 1});
-    std::gslice right_slice(size-1, {size, 1}, {size, 1});
+    std::gslice left_slice(0, {size}, {size});
+    std::gslice right_slice(size-1, {size}, {size});
 
     std::vector<std::valarray<double> > E_input(12, std::valarray<double>(halfsize));
     E_input[0] = cos(data[tslice]);
