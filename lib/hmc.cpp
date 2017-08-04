@@ -96,7 +96,7 @@ std::vector<std::valarray<double> > hmc::hmc(
 
 
         // Store the energy
-        energy[sample] = current_energy;
+        energy[sample] = f_energy(current_state);
 
         // Store the reduced parameters
         trace.push_back( reduce( current_state ) );
@@ -164,7 +164,8 @@ std::vector<std::valarray<double> > hmc::nuts(
 
         // Find acceptance slice
         double current_energy = total_energy( current_state, current_velocity );
-        int u = uniform_rng.gen() * std::exp( -current_energy );
+        double u = uniform_rng.gen() * std::exp( -current_energy );
+        double lu = std::log(u);
 
         bool check1 = true, check2 = true;
         // Begin building tree
@@ -178,6 +179,7 @@ std::vector<std::valarray<double> > hmc::nuts(
             int dir = dir_choice*2 - 1;
 
             // Run leapfrog in that direction
+            int tree_added = 0;
             for (int i=0; i < tree_height; i++)
             {
                 leapfrog::lfs( state_tree[tree_count],
@@ -189,11 +191,16 @@ std::vector<std::valarray<double> > hmc::nuts(
                 // Update arrays
                 temp_state = state_tree[tree_count];
                 temp_velocity = velocity_tree[tree_count];
-                tree_count++;
+                double temp_E = total_energy(temp_state, temp_velocity);
+                if (temp_E >= lu)
+                {
+                    tree_count++;
+                    tree_added++;
+                }
 
                 // Check break
                 if(i == tree_height - 1) {continue;}
-                check1 *= -total_energy(temp_state, temp_velocity) > u - 1000;
+                // check1 *= -total_energy(temp_state, temp_velocity) > lu - 1000;
                 check2 *= dir * ((temp_state - fb_state[other_choice]) *
                          temp_velocity).sum() >= 0;
                 check2 *= dir * ((temp_state - fb_state[other_choice]) *
@@ -203,13 +210,13 @@ std::vector<std::valarray<double> > hmc::nuts(
             if (check1 && check2)
             {
                 // Add to tree size
-                tree_size += tree_height;
+                tree_size += tree_added;
                 tree_height *= 2;
 
                 fb_state[dir_choice] = temp_state;
                 fb_velocity[dir_choice] = temp_velocity;
 
-                check1 *= -total_energy(temp_state, temp_velocity) > u - 1000;
+                // check1 *= -total_energy(temp_state, temp_velocity) > std::log(u) - 1000;
                 check2 *= ((fb_state[0] - fb_state[1]) * fb_velocity[0]).sum() >= 0;
                 check2 *= ((fb_state[0] - fb_state[1]) * fb_velocity[1]).sum() >= 0;
             }
