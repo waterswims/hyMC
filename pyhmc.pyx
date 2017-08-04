@@ -16,6 +16,7 @@ cdef extern from "<valarray>" namespace "std" nogil:
 cdef extern from "hmc.hpp" namespace "hmc":
     struct HamiltonianOptions:
         double J
+        double H
 
 # declare the Heisenberg model function
 cdef extern from "hmc.hpp" namespace "hmc":
@@ -32,7 +33,7 @@ cdef extern from "hmc.hpp" namespace "hmc":
 
 # Wrap function
 cpdef simulate(
-    J, KB, T, np.ndarray[double, ndim=1, mode='c'] dimensions,
+    J, H, KB, T, np.ndarray[double, ndim=1, mode='c'] dimensions,
     nsamples, lf_eps, lf_steps, init_seed=1001):
 
     cdef dvarray c_energy = dvarray(nsamples)
@@ -44,6 +45,7 @@ cpdef simulate(
 
     cdef HamiltonianOptions options
     options.J = J
+    options.H = H
     cdef double beta = 1.0 / (KB * T)
 
     heisenberg_model( c_energy, c_magnetisation, c_dims, options, beta,

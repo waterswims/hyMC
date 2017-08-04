@@ -1,6 +1,45 @@
 #include "../include/1d_hamils.hpp"
 #include "../include/constants.hpp"
 
+std::vector<std::valarray<double> > hmc::trig_left(const std::valarray<double> data)
+{
+    int halfsize = data.size() / 2;
+    std::slice tslice(0, halfsize, 1);
+    std::slice pslice(halfsize, halfsize, 1);
+
+    std::vector<std::valarray<double> > E_input(8, std::valarray<double>(halfsize));
+    E_input[0] = cos(data[tslice]);
+    E_input[2] = sin(data[tslice]);
+    E_input[4] = cos(data[pslice]);
+    E_input[6] = sin(data[pslice]);
+    for(int i = 0; i < 4; i++)
+    {
+        E_input[2*i+1] = E_input[2*i].cshift(-1);
+    }
+
+    return E_input;
+}
+
+std::vector<std::valarray<double> > hmc::trig_lr(const std::valarray<double> data)
+{
+    int halfsize = data.size() / 2;
+    std::slice tslice(0, halfsize, 1);
+    std::slice pslice(halfsize, halfsize, 1);
+
+    std::vector<std::valarray<double> > E_input(12, std::valarray<double>(halfsize));
+    E_input[0] = cos(data[tslice]);
+    E_input[3] = sin(data[tslice]);
+    E_input[6] = cos(data[pslice]);
+    E_input[9] = sin(data[pslice]);
+    for(int i = 0; i < 4; i++)
+    {
+        E_input[3*i+1] = E_input[3*i].cshift(-1);
+        E_input[3*i+2] = E_input[3*i].cshift(1);
+    }
+
+    return E_input;
+}
+
 void hmc::exchange_grad_1d(std::valarray<double>& grad_out,
                       const std::valarray<double>& data)
 {

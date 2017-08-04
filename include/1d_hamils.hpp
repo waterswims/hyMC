@@ -9,6 +9,42 @@
 namespace hmc
 {
     ///////////////////////////////////////////////////////////////////////////
+    /// \brief Calculates the cosine and sine of the spin angles and then shifts
+    ///        them left.
+    ///
+    /// \param data Reference to the valarray where the input data is stored.
+    ///             The first half of the array is the ordered list of
+    ///             azimuthal angles \f$\theta\f$ and the second half is the
+    ///             ordered list of polar angles \f$\phi\f$ of each spin.
+    ///
+    /// \return Vector of the trigonometric transformations of the
+    ///         angles of the spins ordered as:
+    ///         cos(theta): (asis, left),
+    ///         sin(theta): (asis, left),
+    ///         cos(phi): (asis, left),
+    ///         sin(phi): (asis, left)
+    ///////////////////////////////////////////////////////////////////////////
+    std::vector<std::valarray<double> > trig_left(const std::valarray<double> data);
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Calculates the cosine and sine of the spin angles and then shifts
+    ///        them left and right.
+    ///
+    /// \param data Reference to the valarray where the input data is stored.
+    ///             The first half of the array is the ordered list of
+    ///             azimuthal angles \f$\theta\f$ and the second half is the
+    ///             ordered list of polar angles \f$\phi\f$ of each spin.
+    ///
+    /// \return Vector of the trigonometric transformations of the
+    ///         angles of the spins ordered as:
+    ///         cos(theta): (asis, left, right),
+    ///         sin(theta): (asis, left, right),
+    ///         cos(phi): (asis, left, right),
+    ///         sin(phi): (asis, left, right)
+    ///////////////////////////////////////////////////////////////////////////
+    std::vector<std::valarray<double> > trig_lr(const std::valarray<double> data);
+
+    ///////////////////////////////////////////////////////////////////////////
     /// \brief Calculates the gradient of the exchange energy of a 1D system.
     ///
     /// Calculates the gradient \f$\partial/\partial \theta\f$ and

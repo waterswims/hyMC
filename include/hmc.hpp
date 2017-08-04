@@ -50,12 +50,6 @@ namespace hmc {
         const size_t nsamples,
         const long initial_state_seed );
 
-    std::function<void(std::valarray<double>&, const std::valarray<double>&)>
-    heisenberg_gradients( const size_t ndims, const HamiltonianOptions options );
-
-    std::function<double(const std::valarray<double>&)>
-    heisenberg_hamiltonian( const size_t ndims, const HamiltonianOptions options, const double beta );
-
     double magnetisation( const std::valarray<double>& state );
 }
 

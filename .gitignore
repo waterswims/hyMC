@@ -7,3 +7,8 @@ notebooks/.ipynb_checkpoints/*
 docs/*
 *.dSYM
 .DS_Store
+build
+pyhmc.cpp
+pyhmc.cpython*
+pyhmc.egg-info
+libhymc.so
