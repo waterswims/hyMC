@@ -1,6 +1,7 @@
 #ifndef HAMIL_2D_TEST
 #define HAMIL_2D_TEST
 
+#include "../include/all_hamils.hpp"
 #include "../include/2d_hamils.hpp"
 #include "../include/hmc.hpp"
 #include <gtest/gtest.h>
@@ -77,7 +78,7 @@ TEST(Hamiltonian_2d, exchange_alligned)
 
     std::vector<std::valarray<double> > E_input = hmc::trig_left_up(test_spins);
 
-    EXPECT_NEAR(hmc::exchange_energy_2d(E_input), -2*tsize, 2*tsize*1e-15);
+    EXPECT_NEAR(hmc::exchange_energy(E_input, 1, 2), -2*tsize, 2*tsize*1e-15);
 }
 
 TEST(Hamiltonian_2d, exchange_antialligned)
@@ -93,7 +94,7 @@ TEST(Hamiltonian_2d, exchange_antialligned)
 
     std::vector<std::valarray<double> > E_input = hmc::trig_left_up(test_spins);
 
-    EXPECT_NEAR(hmc::exchange_energy_2d(E_input), 2*tsize, 2*tsize*1e-15);
+    EXPECT_NEAR(hmc::exchange_energy(E_input, 1, 2), 2*tsize, 2*tsize*1e-15);
 }
 
 TEST(Hamiltonian_2d, exchange_specific)
@@ -114,7 +115,7 @@ TEST(Hamiltonian_2d, exchange_specific)
     test_spins[7] = 2.1;
 
     std::vector<std::valarray<double> > E_input = hmc::trig_left_up(test_spins);
-    EXPECT_NEAR(hmc::exchange_energy_2d(E_input), 3.4939748074272869,
+    EXPECT_NEAR(hmc::exchange_energy(E_input, 1, 2), 3.4939748074272869,
                                         3.4939748074272869*1e-15);
 }
 
@@ -140,13 +141,19 @@ TEST(Hamiltonian_2d, total_energy)
     std::function<double(const std::valarray<double>&)> E_func;
 
     options.J = 1.0;
-    E_func = hmc::gen_total_energy_2d( options, beta );
+    options.H = 0.0;
+    E_func = hmc::gen_total_energy( options, beta, 2 );
     EXPECT_NEAR(E_func(test_spins), 3.4939748074272869,
                                         3.4939748074272869*1e-15);
 
     options.J = 0.0;
-    E_func = hmc::gen_total_energy_2d( options, beta );
+    E_func = hmc::gen_total_energy( options, beta, 2 );
     EXPECT_EQ(E_func(test_spins), 0);
+
+    options.J = 1.0;
+    options.H = 2.1;
+    E_func = hmc::gen_total_energy( options, beta, 2 );
+    EXPECT_NEAR(E_func(test_spins), 2.91127067, 2.91127067*1e-9);
 }
 
 TEST(Hamiltonian_2d, exchange_grad)
@@ -169,7 +176,7 @@ TEST(Hamiltonian_2d, exchange_grad)
     std::valarray<double> grad(size*2);
     grad = 0;
     std::vector<std::valarray<double> > g_input = hmc::trig_lrud(test_spins);
-    hmc::exchange_grad_2d(grad, g_input);
+    hmc::exchange_grad(grad, g_input, 1, 2);
     EXPECT_NEAR(grad[0], -1.1623660509440559, 1.1623660509440559*1e-15);
     EXPECT_NEAR(grad[1], 0.024380126112986563, 0.024380126112986563*1e-15);
     EXPECT_NEAR(grad[2], -0.19252639008304462, 0.19252639008304462*1e-15);
@@ -202,7 +209,8 @@ TEST(Hamiltonian_2d, total_grad)
     std::function<void(std::valarray<double>&, const std::valarray<double>&)> g_func;
 
     options.J = 1.0;
-    g_func = hmc::gen_total_grad_2d( options );
+    options.H = 0;
+    g_func = hmc::gen_total_grad( options, 2 );
     g_func(grad, test_spins);
     EXPECT_NEAR(grad[0], -1.1623660509440559, 1.1623660509440559*1e-15);
     EXPECT_NEAR(grad[1], 0.024380126112986563, 0.024380126112986563*1e-15);
@@ -214,7 +222,7 @@ TEST(Hamiltonian_2d, total_grad)
     EXPECT_NEAR(grad[7], -2.2735417704169287, 2.2735417704169287*1e-15);
 
     options.J = 0.0;
-    g_func = hmc::gen_total_grad_2d( options );
+    g_func = hmc::gen_total_grad( options, 2 );
     g_func(grad, test_spins);
     EXPECT_EQ(grad[0], 0);
     EXPECT_EQ(grad[1], 0);
@@ -224,6 +232,19 @@ TEST(Hamiltonian_2d, total_grad)
     EXPECT_EQ(grad[5], 0);
     EXPECT_EQ(grad[6], 0);
     EXPECT_EQ(grad[7], 0);
+
+    options.J = 1.0;
+    options.H = 2.1;
+    g_func = hmc::gen_total_grad( options, 2 );
+    g_func(grad, test_spins);
+    EXPECT_NEAR(grad[0], -1.1623660509440559, 1.1623660509440559*1e-15);
+    EXPECT_NEAR(grad[1], 0.024380126112986563, 0.024380126112986563*1e-15);
+    EXPECT_NEAR(grad[2], -0.19252639008304462, 0.19252639008304462*1e-15);
+    EXPECT_NEAR(grad[3], 1.3305123149141138, 1.3305123149141138*1e-15);
+    EXPECT_NEAR(grad[4], -0.8515612488, 0.8515612488*1e-9);
+    EXPECT_NEAR(grad[5], 0.4501555152, 0.4501555152*1e-9);
+    EXPECT_NEAR(grad[6], 3.907214772, 3.907214772*1e-9);
+    EXPECT_NEAR(grad[7], -0.4608021006, 0.4608021006*1e-9);
 }
 
 #endif

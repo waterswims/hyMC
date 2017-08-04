@@ -1,6 +1,5 @@
 #include "../include/hmc.hpp"
-#include "../include/1d_hamils.hpp"
-#include "../include/2d_hamils.hpp"
+#include "../include/all_hamils.hpp"
 #include "../include/leapfrog.hpp"
 #include "../include/mklrand.hpp"
 #include "../include/constants.hpp"
@@ -105,38 +104,6 @@ std::vector<std::valarray<double> > hmc::hmc(
     return trace;
 }
 
-std::function<double(const std::valarray<double>&)>
-hmc::heisenberg_hamiltonian( const size_t ndims, const HamiltonianOptions options, const double beta )
-{
-    switch( ndims )
-    {
-    case 1:
-        return gen_total_energy_1d( options, beta );
-        break;
-    case 2:
-        return gen_total_energy_2d( options, beta );
-        break;
-    default:
-        throw std::invalid_argument( "Must specify 1 or 2 dimensions!");
-    }
-}
-
-std::function<void(std::valarray<double>&, const std::valarray<double>&)>
-hmc::heisenberg_gradients( const size_t ndims, const HamiltonianOptions options )
-{
-    switch( ndims )
-    {
-    case 1:
-        return gen_total_grad_1d( options );
-        break;
-    case 2:
-        return gen_total_grad_2d( options );
-        break;
-    default:
-        throw std::invalid_argument( "Must specify 1 or 2 dimensions!");
-    }
-}
-
 /// Interface to Heisenberg hmc
 void hmc::heisenberg_model(
     std::valarray<double> &sample_energy,
@@ -164,8 +131,8 @@ void hmc::heisenberg_model(
 
     // Get the Hamiltonian and gradient functions
     size_t ndim = system_dimensions.size();
-    auto energy_function = heisenberg_hamiltonian( ndim, options, beta );
-    auto grad_function = heisenberg_gradients( ndim, options );
+    auto energy_function = gen_total_energy( options, beta, ndim );
+    auto grad_function = gen_total_grad( options, ndim );
 
     // Reduction to compute the magnetisation
     std::function<std::valarray<double>(const std::valarray<double>&)>
