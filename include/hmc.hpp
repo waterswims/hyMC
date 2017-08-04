@@ -39,6 +39,16 @@ namespace hmc {
         const std::function<void(std::valarray<double>&, const std::valarray<double>&)> &f_energy_grad,
         const std::function<std::valarray<double>(const std::valarray<double>&)> &reduce );
 
+    std::vector<std::valarray<double> > nuts(
+        std::valarray<double> &sample_energy,
+        const std::valarray<double> &initial_state,
+        const double leapfrog_eps,
+        const size_t samples,
+        const std::function<double(const std::valarray<double>&)> &f_energy,
+        const std::function<void(std::valarray<double>&, const std::valarray<double>&)> &f_energy_grad,
+        const std::function<std::valarray<double>(const std::valarray<double>&)> &reduce
+    );
+
     void heisenberg_model(
         std::valarray<double> &sample_energy,
         std::valarray<double> &sample_magnetisation,

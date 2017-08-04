@@ -5,6 +5,7 @@
 #include <functional>
 #include <cmath>
 #include <valarray>
+#include <iostream>
 
 TEST( hmc, kinetic_energy )
 {
@@ -122,7 +123,68 @@ TEST( hmc, hmc_sampling_normal_distribution )
     // Compute sample mean and variance
     double sample_mean = 0.0;
     for( unsigned int i=N/2.; i<N; i++ )
+    {
         sample_mean += trace[i][0];
+    }
+    sample_mean /= N/2.;
+
+    double expected_squares = 0;
+    for( unsigned int i=N/2.; i<N; i++ )
+        expected_squares += trace[i][0] * trace[i][0];
+    expected_squares /= N/2;
+    double sample_variance = expected_squares - sample_mean*sample_mean;
+    double sample_std = std::sqrt( sample_variance );
+
+    EXPECT_NEAR( mu, sample_mean, 0.001 );
+    EXPECT_NEAR( std, sample_std, 0.001 );
+}
+
+TEST( hmc, nuts_sampling_normal_distribution )
+{
+    // Sampling from a univariate normal distribution
+
+    // initial state
+    std::valarray<double> x_init = {1.0};
+
+    // normal parameters
+    double mu = 1.0;
+    double std = 0.8;
+
+    // energy function
+    std::function<double(const std::valarray<double>&)>
+        energy = [mu,std]( const std::valarray<double>&x)
+        { return (x[0]-mu)*(x[0]-mu)/(2*std*std); };
+
+    // energy gradient
+    std::function<void(std::valarray<double>&,const std::valarray<double>&)>
+        energy_grad = [mu,std](std::valarray<double>&grad, const std::valarray<double>&x )
+        { grad[0] = (x[0]-mu)/(std*std); };
+
+    // reduce function
+    std::function<std::valarray<double>(const std::valarray<double>&)>
+        reduce = [](const std::valarray<double>&x)
+        { return std::valarray<double>( x ); };
+
+    // Run hmc
+    size_t N = 1000000;
+    std::valarray<double> energies( N );
+    double eps = 0.18;
+    size_t steps = 20;
+
+    // Run HMC!
+    auto trace = hmc::nuts( energies, x_init, eps, N, energy, energy_grad, reduce );
+
+    // Are the dimensions correct?
+    EXPECT_EQ( trace.size(), N );
+    EXPECT_EQ( trace[0].size(), 1 );
+
+    // Compute sample mean and variance
+    double sample_mean = 0.0;
+    for( unsigned int i=N/2.; i<N; i++ )
+    {
+        sample_mean += trace[i][0];
+        std::cerr << trace[i][0] << std::endl;
+    }
     sample_mean /= N/2.;
 
     double expected_squares = 0;

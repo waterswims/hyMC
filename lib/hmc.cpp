@@ -5,6 +5,7 @@
 #include "../include/constants.hpp"
 #include <cmath>
 #include <exception>
+#include <iostream>
 #define _USE_MATH_DEFINES
 
 bool hmc::accept_trial( const double e, const double e_trial,
@@ -96,6 +97,133 @@ std::vector<std::valarray<double> > hmc::hmc(
 
         // Store the energy
         energy[sample] = current_energy;
+
+        // Store the reduced parameters
+        trace.push_back( reduce( current_state ) );
+    }
+
+    return trace;
+}
+
+std::vector<std::valarray<double> > hmc::nuts(
+    std::valarray<double> &sample_energy,
+    const std::valarray<double> &initial_state,
+    const double leapfrog_eps,
+    const size_t samples,
+    const std::function<double(const std::valarray<double>&)> &f_energy,
+    const std::function<void(std::valarray<double>&, const std::valarray<double>&)> &f_energy_grad,
+    const std::function<std::valarray<double>(const std::valarray<double>&)> &reduce
+)
+{
+    // system size
+    size_t system_size = initial_state.size();
+
+    // initialise vector of results
+    std::vector<std::valarray<double> > trace;
+
+    // allocate memory for work
+    std::valarray<double> current_state( initial_state );
+    std::valarray<double> current_velocity( system_size );
+    std::valarray<double> temp_state( system_size );
+    std::valarray<double> temp_velocity( system_size );
+    std::valarray<double> work( system_size );
+    std::vector<std::valarray<double> > state_tree(100, std::valarray<double>(system_size));
+    std::vector<std::valarray<double> > velocity_tree(100, std::valarray<double>(system_size));
+    std::vector<std::valarray<double> > fb_state(2, std::valarray<double>(system_size));
+    std::vector<std::valarray<double> > fb_velocity(2, std::valarray<double>(system_size));
+    fb_state[0] = current_state;
+    fb_state[1] = current_state;
+    fb_velocity[0] = current_velocity;
+    fb_velocity[1] = current_velocity;
+
+    // Allocate RNGs
+    mklrand::mkl_irand int_rng(100000, 666);
+    mklrand::mkl_drand uniform_rng( 100000, 1001 );
+    mklrand::mkl_nrand normal_rng( 0, 1, 100000, 555555 );
+
+    // Total energy
+    std::function<double(const std::valarray<double>&, const std::valarray<double>&)>
+        total_energy = [&f_energy](const std::valarray<double>& state, const std::valarray<double>& velocities)
+        { return f_energy( state ) + kinetic_energy( velocities ); };
+
+    // Run a monte carlo step until we get specific number of samples
+    for( unsigned int sample=0; sample<samples; sample++ )
+    {
+        // Get the initial state and a random choice of velocity
+        for( unsigned int i=0; i<system_size; i++ )
+            current_velocity[i] = normal_rng.gen();
+        fb_velocity[0] = current_velocity;
+        fb_velocity[1] = current_velocity;
+
+        // Init tree size
+        int tree_size = 1;
+        int tree_count = 1;
+        state_tree[0] = current_state;
+        velocity_tree[0] = current_velocity;
+        int tree_height = 1;
+
+        // Find acceptance slice
+        double current_energy = total_energy( current_state, current_velocity );
+        int u = uniform_rng.gen() * std::exp( -current_energy );
+
+        bool check1 = true, check2 = true;
+        // Begin building tree
+        while(check1 && check2)
+        {
+            // Pick random direction
+            int dir_choice = int_rng.gen();
+            int other_choice = (dir_choice+1)%2;
+            temp_state = fb_state[dir_choice];
+            temp_velocity = fb_state[dir_choice];
+            int dir = dir_choice*2 - 1;
+
+            // Run leapfrog in that direction
+            for (int i=0; i < tree_height; i++)
+            {
+                leapfrog::lfs( state_tree[tree_count],
+                               velocity_tree[tree_count], work,
+                               temp_state, temp_velocity,
+                               f_energy_grad,
+                               dir*leapfrog_eps );
+
+                // Update arrays
+                temp_state = state_tree[tree_count];
+                temp_velocity = velocity_tree[tree_count];
+                tree_count++;
+
+                // Check break
+                if(i == tree_height - 1) {continue;}
+                check1 *= -total_energy(temp_state, temp_velocity) > u - 1000;
+                check2 *= dir * ((temp_state - fb_state[other_choice]) *
+                         temp_velocity).sum() >= 0;
+                check2 *= dir * ((temp_state - fb_state[other_choice]) *
+                         fb_velocity[other_choice]).sum() >= 0;
+            }
+
+            if (check1 && check2)
+            {
+                // Add to tree size
+                tree_size += tree_height;
+                tree_height *= 2;
+
+                fb_state[dir_choice] = temp_state;
+                fb_velocity[dir_choice] = temp_velocity;
+
+                check1 *= -total_energy(temp_state, temp_velocity) > u - 1000;
+                check2 *= ((fb_state[0] - fb_state[1]) * fb_velocity[0]).sum() >= 0;
+                check2 *= ((fb_state[0] - fb_state[1]) * fb_velocity[1]).sum() >= 0;
+            }
+        }
+
+        // Randomly Sample from the tree
+        int choice = int(uniform_rng.gen()*tree_size);
+        current_state = state_tree[choice];
+        current_velocity = velocity_tree[choice];
+        fb_state[0] = current_state;
+        fb_state[1] = current_state;
+
+        // Store the energy
+        sample_energy[sample] = f_energy(current_state);
 
         // Store the reduced parameters
         trace.push_back( reduce( current_state ) );
