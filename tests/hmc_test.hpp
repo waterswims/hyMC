@@ -1,7 +1,9 @@
 #ifndef HMC_TEST
 #define HMC_TEST
+
 #include "../include/hmc.hpp"
 #include "../include/mklrand.hpp"
+#include "test_funcs.hpp"
 #include <functional>
 #include <cmath>
 #include <valarray>
@@ -137,6 +139,27 @@ TEST( hmc, hmc_sampling_normal_distribution )
 
     EXPECT_NEAR( mu, sample_mean, 0.001 );
     EXPECT_NEAR( std, sample_std, 0.001 );
+
+    int N_bins = 100;
+    std::vector<int> bins(N_bins, 0);
+    for(int i = 0; i < N; i++)
+    {
+        double g = trace[i][0];
+        if (g >= 3 || g < -1) {continue;}
+        int b_num = int((g+1)*(N_bins/4.0));
+        bins[b_num]++;
+    }
+    std::vector<double> expect(N_bins);
+    for(int i=0; i < N_bins; i++)
+    {
+        double lower = (i)*4.0/float(N_bins) - 1;
+        double higher = (i+1)*4.0/float(N_bins) - 1;
+        double temp = erf((higher - sample_mean)/(sample_std*pow(2, 0.5))) - erf((lower - sample_mean)/(sample_std*pow(2, 0.5)));
+        expect[i] = N*0.5*temp;
+    }
+    double chi2_test = chi2(bins, expect);
+    EXPECT_GT(chi2_test, 0.9);
+    EXPECT_LT(chi2_test, 1.3);
 }
 
 TEST( hmc, nuts_sampling_normal_distribution )
@@ -168,8 +191,7 @@ TEST( hmc, nuts_sampling_normal_distribution )
     // Run hmc
     size_t N = 1000000;
     std::valarray<double> energies( N );
-    double eps = 0.18;
-    size_t steps = 20;
+    double eps = 0.25;
 
     // Run HMC!
     auto trace = hmc::nuts( energies, x_init, eps, N, energy, energy_grad, reduce );
@@ -180,22 +202,44 @@ TEST( hmc, nuts_sampling_normal_distribution )
 
     // Compute sample mean and variance
     double sample_mean = 0.0;
-    for( unsigned int i=N/2.; i<N; i++ )
+    for( unsigned int i=0; i<N; i++ )
     {
         sample_mean += trace[i][0];
-        std::cerr << trace[i][0] << std::endl;
     }
-    sample_mean /= N/2.;
+    sample_mean /= float(N);
 
     double expected_squares = 0;
-    for( unsigned int i=N/2.; i<N; i++ )
+    for( unsigned int i=0; i<N; i++ )
         expected_squares += trace[i][0] * trace[i][0];
-    expected_squares /= N/2;
+    expected_squares /= float(N);
     double sample_variance = expected_squares - sample_mean*sample_mean;
     double sample_std = std::sqrt( sample_variance );
 
     EXPECT_NEAR( mu, sample_mean, 0.001 );
     EXPECT_NEAR( std, sample_std, 0.001 );
+
+    int N_bins = 100;
+    std::vector<int> bins(N_bins, 0);
+    for(int i = 0; i < N; i++)
+    {
+        // std::cerr << trace[i][0] << std::endl;
+        double g = trace[i][0];
+        if (g > 3 || g < -1) {continue;}
+        int b_num = int((g+1)*(N_bins/4.0));
+        bins[b_num]++;
+    }
+    std::vector<double> expect(N_bins);
+    for(int i=0; i < N_bins; i++)
+    {
+        double lower = (i)*4.0/float(N_bins) - 1;
+        double higher = (i+1)*4.0/float(N_bins) - 1;
+        double temp = erf((higher - sample_mean)/(sample_std*pow(2, 0.5))) - erf((lower - sample_mean)/(sample_std*pow(2, 0.5)));
+        expect[i] = N*0.5*temp;
+        // std::cout << bins[i] << " " << expect[i] << " " << temp << std::endl;
+    }
+    double chi2_test = chi2(bins, expect);
+    EXPECT_GT(chi2_test, 0.9);
+    EXPECT_LT(chi2_test, 1.3);
 }
 
 TEST( hmc, magnetisaton )
