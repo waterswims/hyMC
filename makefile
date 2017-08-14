@@ -15,7 +15,7 @@ GTEST_DIR=tests/googletest/googletest
 GTEST_FLAGS=-isystem $(GTEST_DIR)/include
 
 # C flags
-CXXFLAGS=--std=c++11 -W -Wall -pedantic -O3 -g -DMKL_ILP64 -I$(MKLROOT)/include -use-intel-optimized-headers
+CXXFLAGS=-g --std=c++11 -W -Wall -pedantic -O3 -g -DMKL_ILP64 -I$(MKLROOT)/include -use-intel-optimized-headers
 # OS dependent flags
 ifeq ($(OS),Darwin)
 LDLIBS=-use-intel-optimized-headers ${MKLROOT}/lib/libmkl_intel_ilp64.a ${MKLROOT}/lib/libmkl_sequential.a ${MKLROOT}/lib/libmkl_core.a -lpthread -lm -ldl
@@ -36,9 +36,9 @@ TEST_FILES=$(wildcard $(TEST_PATH)/*.hpp)
 default: libhymc.so setup.py pyhmc.pyx
 	CXX=$(CXX) CC=$(CC) pip install -e .
 
-main: main.cpp
+main: main.cpp libhymc.so
 	$(CXX)	$(CXXFLAGS) \
-	-o $@ main.cpp -lhymc
+	-o $@ main.cpp -lhymc -L. \
 	$(LDLIBS)
 
 hymc.a: $(OBJ_FILES)
