@@ -27,14 +27,13 @@ cdef extern from "hmc.hpp" namespace "hmc":
         const HamiltonianOptions options,
         const double beta,
         const double leapfrog_eps,
-        const size_t leapfrog_steps,
         const size_t nsamples,
         const long initial_state_seed )
 
 # Wrap function
 cpdef simulate(
     J, H, KB, T, np.ndarray[double, ndim=1, mode='c'] dimensions,
-    nsamples, lf_eps, lf_steps, init_seed=1001):
+    nsamples, lf_eps, init_seed=1001):
 
     cdef dvarray c_energy = dvarray(nsamples)
     cdef dvarray c_magnetisation = dvarray(nsamples)
@@ -49,7 +48,7 @@ cpdef simulate(
     cdef double beta = 1.0 / (KB * T)
 
     heisenberg_model( c_energy, c_magnetisation, c_dims, options, beta,
-                      lf_eps, lf_steps, nsamples, init_seed )
+                      lf_eps, nsamples, init_seed )
 
     energy = np.array([c_energy[i] for i in range(nsamples)])
     magnetisation = np.array([c_magnetisation[i] for i in range(nsamples)])
