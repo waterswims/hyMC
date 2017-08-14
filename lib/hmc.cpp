@@ -117,7 +117,9 @@ std::vector<std::valarray<double> > hmc::nuts(
 {
     // system size
     size_t system_size = initial_state.size();
-    size_t tree_buff = 100000;
+
+    // max tree height
+    size_t max_tree_height = 15;
 
     // initialise vector of results
     std::vector<std::valarray<double> > trace;
@@ -126,10 +128,13 @@ std::vector<std::valarray<double> > hmc::nuts(
     std::valarray<double> current_state( initial_state );
     std::valarray<double> current_velocity( system_size );
     std::valarray<double> work( system_size );
-    std::vector<std::valarray<double> > state_tree(tree_buff, std::valarray<double>(system_size));
-    std::vector<std::valarray<double> > velocity_tree(tree_buff, std::valarray<double>(system_size));
+    std::valarray<double> temp_state(system_size);
+    std::valarray<double> next_state(system_size);
     std::vector<std::valarray<double> > fb_state(2, std::valarray<double>(system_size));
     std::vector<std::valarray<double> > fb_velocity(2, std::valarray<double>(system_size));
+    std::vector<std::valarray<double> > dud_state_tree(max_tree_height, std::valarray<double>(system_size));
+    std::vector<std::valarray<double> > dud_vel_tree(max_tree_height, std::valarray<double>(system_size));
+    std::vector<std::valarray<double> > pos_state_tree(max_tree_height, std::valarray<double>(system_size));
 
     // Allocate RNGs
     mklrand::mkl_irand int_rng(100000, 666);
@@ -151,12 +156,10 @@ std::vector<std::valarray<double> > hmc::nuts(
         fb_velocity[1] = current_velocity;
         fb_state[0] = current_state;
         fb_state[1] = current_state;
+        next_state = current_state;
 
         // Init tree size
-        int tree_size = 1;
-        int tree_count = 1;
-        state_tree[0] = current_state;
-        velocity_tree[0] = current_velocity;
+        int n = 1;
         int tree_height = 0;
 
         // Find acceptance slice
@@ -168,48 +171,41 @@ std::vector<std::valarray<double> > hmc::nuts(
         // Begin building tree
         while(check1)
         {
+            // Init n for this tree
+            int temp_n = 0;
+
             // Pick random direction
             int dir_choice = int_rng.gen();
+            int dir = 2*dir_choice - 1;
+            double temp_eps = leapfrog_eps*dir;
 
             // Run leapfrog in that direction
-            int tree_added = 0;
-            if(dir_choice)
+            if(temp_eps > 0)
             {
-                build_tree(fb_state[1], fb_velocity[1], work, work, fb_state[1], fb_velocity[1],
-                           lu, dir_choice, tree_height, leapfrog_eps, state_tree, velocity_tree,
-                           tree_count, tree_added, check1, f_energy_grad, total_energy, work);
+                build_tree(fb_state[1], fb_velocity[1], dud_state_tree[tree_height+1], dud_vel_tree[tree_height+1], fb_state[1], fb_velocity[1],
+                           temp_state, dud_state_tree, dud_vel_tree, pos_state_tree, lu, tree_height, temp_eps, check1, temp_n, f_energy_grad, total_energy, work, uniform_rng);
             }
             else
             {
-                build_tree(fb_state[0], fb_velocity[0], fb_state[0], fb_velocity[0], work, work,
-                           lu, dir_choice, tree_height, leapfrog_eps, state_tree, velocity_tree,
-                           tree_count, tree_added, check1, f_energy_grad, total_energy, work);
+                build_tree(fb_state[0], fb_velocity[0], fb_state[0], fb_velocity[0], dud_state_tree[tree_height+1], dud_vel_tree[tree_height+1],
+                           temp_state, dud_state_tree, dud_vel_tree, pos_state_tree, lu, tree_height, temp_eps, check1, temp_n, f_energy_grad, total_energy, work, uniform_rng);
             }
 
-            if (check1)
-            {
-                // Add to tree size
-                tree_size += tree_added;
-            }
-
+            if (check1 && uniform_rng.gen() < temp_n/float(n)) {next_state = temp_state;}
+            n += temp_n;
             check1 *= (((fb_state[1] - fb_state[0]) * fb_velocity[0]).sum() >= 0);
             check1 *= (((fb_state[1] - fb_state[0]) * fb_velocity[1]).sum() >= 0);
             tree_height++;
         }
 
-        // std::cout << "Tree Built " << sample << " " << tree_size << " " << tree_count << std::endl;
-
-        // Randomly Sample from the tree
-        int choice = int(uniform_rng.gen()*tree_size);
-        current_state = state_tree[choice];
+        // Set next state
+        current_state = next_state;
 
         // Store the energy
         sample_energy[sample] = f_energy(current_state);
 
         // Store the reduced parameters
         trace.push_back( reduce( current_state ) );
-
-        // std::cout << sample << std::endl;
     }
     return trace;
 }
@@ -221,60 +217,62 @@ void hmc::build_tree(
     std::valarray<double> &back_vel,
     std::valarray<double> &for_state,
     std::valarray<double> &for_vel,
+    std::valarray<double> &out_state,
+    std::vector<std::valarray<double> > &dud_state_tree,
+    std::vector<std::valarray<double> > &dud_vel_tree,
+    std::vector<std::valarray<double> > &pos_state_tree,
     const double slice,
-    const int dir_choice,
     const int tree_height,
     const double eps,
-    std::vector<std::valarray<double> > &state_tree,
-    std::vector<std::valarray<double> > &vel_tree,
-    int &tree_count,
-    int &tree_added,
     bool &break_check,
+    int &n_check,
     const std::function<void(std::valarray<double>&,const std::valarray<double>&)> &energy_grads,
     const std::function<double(const std::valarray<double>&, const std::valarray<double>&)> &energy,
-    std::valarray<double> &work
+    std::valarray<double> &work,
+    mklrand::mkl_drand &rng
 )
 {
     if(tree_height == 0)
     {
-        int dir = 2*dir_choice - 1;
-        leapfrog::lfs(state_tree[tree_count], vel_tree[tree_count], work, in_state, in_vel, energy_grads, dir*eps);
+        leapfrog::lfs(dud_state_tree[tree_height], dud_vel_tree[tree_height], work, in_state, in_vel, energy_grads, eps);
 
-        back_state = state_tree[tree_count];
-        back_vel = vel_tree[tree_count];
-        for_state = state_tree[tree_count];
-        for_vel = vel_tree[tree_count];
+        back_state = dud_state_tree[tree_height];
+        back_vel = dud_vel_tree[tree_height];
+        for_state = dud_state_tree[tree_height];
+        for_vel = dud_vel_tree[tree_height];
+        out_state = dud_state_tree[tree_height];
 
-        double temp_E = -energy(state_tree[tree_count], vel_tree[tree_count]);
-        if (temp_E > slice)
-        {
-            tree_count++;
-            tree_added++;
-            // if (tree_count == 100000) {std::cout << "Wasaahhhhh" << std::endl;}
-        }
-
+        double temp_E = -energy(dud_state_tree[tree_height], dud_vel_tree[tree_height]);
+        n_check = (temp_E >= slice);
         break_check *= (temp_E >= slice - 1000);
         return;
     }
     else
     {
+        n_check = 0;
         build_tree(in_state, in_vel, back_state, back_vel, for_state, for_vel,
-                   slice, dir_choice, tree_height-1, eps, state_tree, vel_tree,
-                   tree_count, tree_added, break_check, energy_grads, energy, work);
-        if(dir_choice)
+                   out_state, dud_state_tree, dud_vel_tree, pos_state_tree, slice, tree_height-1, eps, break_check, n_check,
+                   energy_grads, energy, work, rng);
+        if(break_check)
         {
-            build_tree(for_state, for_vel, work, work, for_state, for_vel,
-                       slice, dir_choice, tree_height-1, eps, state_tree, vel_tree,
-                       tree_count, tree_added, break_check, energy_grads, energy, work);
+            int temp_n = 0;
+            if(eps > 0)
+            {
+                build_tree(for_state, for_vel, dud_state_tree[tree_height], dud_vel_tree[tree_height], for_state,
+                           for_vel, pos_state_tree[tree_height-1], dud_state_tree, dud_vel_tree, pos_state_tree, slice, tree_height-1, eps,
+                           break_check, temp_n, energy_grads, energy, work, rng);
+            }
+            else
+            {
+                build_tree(back_state, back_vel, back_state, back_vel, dud_state_tree[tree_height],
+                           dud_vel_tree[tree_height], pos_state_tree[tree_height-1], dud_state_tree, dud_vel_tree, pos_state_tree, slice, tree_height-1, eps,
+                           break_check, temp_n, energy_grads, energy, work, rng);
+            }
+            if(rng.gen() < temp_n/float(temp_n+n_check)) {out_state = pos_state_tree[tree_height-1];}
+            break_check *= (((for_state - back_state) * back_vel).sum() >= 0);
+            break_check *= (((for_state - back_state) * for_vel).sum() >= 0);
+            n_check += temp_n;
         }
-        else
-        {
-            build_tree(back_state, back_vel, back_state, back_vel, work, work,
-                       slice, dir_choice, tree_height-1, eps, state_tree, vel_tree,
-                       tree_count, tree_added, break_check, energy_grads, energy, work);
-        }
-        break_check *= (((for_state - back_state) * back_vel).sum() >= 0);
-        break_check *= (((for_state - back_state) * for_vel).sum() >= 0);
         return;
     }
 }
@@ -287,7 +285,6 @@ void hmc::heisenberg_model(
     const HamiltonianOptions options,
     const double beta,
     const double leapfrog_eps,
-    const size_t leapfrog_steps,
     const size_t nsamples,
     const long initial_state_seed )
 {
@@ -318,8 +315,6 @@ void hmc::heisenberg_model(
         };
 
     // EXECUTE HMC
-    // auto trace = hmc::hmc( sample_energy, initial_state, leapfrog_eps, leapfrog_steps, nsamples,
-    //                        energy_function, grad_function, reduce );
     auto trace = hmc::nuts( sample_energy, initial_state, leapfrog_eps, nsamples,
                           energy_function, grad_function, reduce );
 

@@ -138,7 +138,7 @@ TEST( hmc, hmc_sampling_normal_distribution )
     double sample_std = std::sqrt( sample_variance );
 
     EXPECT_NEAR( mu, sample_mean, 0.001 );
-    EXPECT_NEAR( std, sample_std, 0.001 );
+    EXPECT_NEAR( std, sample_std, 0.0015 );
 
     int N_bins = 100;
     std::vector<int> bins(N_bins, 0);
@@ -216,13 +216,12 @@ TEST( hmc, nuts_sampling_normal_distribution )
     double sample_std = std::sqrt( sample_variance );
 
     EXPECT_NEAR( mu, sample_mean, 0.001 );
-    EXPECT_NEAR( std, sample_std, 0.001 );
+    EXPECT_NEAR( std, sample_std, 0.0015 );
 
     int N_bins = 100;
     std::vector<int> bins(N_bins, 0);
     for(int i = 0; i < N; i++)
     {
-        // std::cerr << trace[i][0] << std::endl;
         double g = trace[i][0];
         if (g > 3 || g < -1) {continue;}
         int b_num = int((g+1)*(N_bins/4.0));
@@ -235,7 +234,6 @@ TEST( hmc, nuts_sampling_normal_distribution )
         double higher = (i+1)*4.0/float(N_bins) - 1;
         double temp = erf((higher - sample_mean)/(sample_std*pow(2, 0.5))) - erf((lower - sample_mean)/(sample_std*pow(2, 0.5)));
         expect[i] = N*0.5*temp;
-        // std::cout << bins[i] << " " << expect[i] << " " << temp << std::endl;
     }
     double chi2_test = chi2(bins, expect);
     EXPECT_GT(chi2_test, 0.9);

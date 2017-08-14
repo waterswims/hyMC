@@ -76,18 +76,19 @@ namespace hmc {
         std::valarray<double> &back_vel,
         std::valarray<double> &for_state,
         std::valarray<double> &for_vel,
+        std::valarray<double> &out_state,
+        std::vector<std::valarray<double> > &dud_state_tree,
+        std::vector<std::valarray<double> > &dud_vel_tree,
+        std::vector<std::valarray<double> > &pos_state_tree,
         const double slice,
-        const int dir_choice,
         const int tree_height,
         const double eps,
-        std::vector<std::valarray<double> > &state_tree,
-        std::vector<std::valarray<double> > &vel_tree,
-        int &tree_count,
-        int &tree_added,
         bool &break_check,
+        int &n_check,
         const std::function<void(std::valarray<double>&,const std::valarray<double>&)> &energy_grads,
         const std::function<double(const std::valarray<double>&, const std::valarray<double>&)> &energy,
-        std::valarray<double> &work
+        std::valarray<double> &work,
+        mklrand::mkl_drand &rng
     );
 
     void heisenberg_model(
@@ -97,7 +98,6 @@ namespace hmc {
         const HamiltonianOptions options,
         const double beta,
         const double leapfrog_eps,
-        const size_t leapfrog_steps,
         const size_t nsamples,
         const long initial_state_seed );
 

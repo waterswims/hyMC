@@ -1,10 +1,12 @@
 hymc.a
 tests/libs/*
 tests/test_files/double_save_test.cp
-objects/*
+objects
 runtests
-notebooks/.ipynb_checkpoints/*
-docs/*
+*/.ipynb_checkpoints/
+.ipynb_checkpoints/
+config
+docs
 *.dSYM
 .DS_Store
 build
@@ -12,3 +14,4 @@ pyhmc.cpp
 pyhmc.cpython*
 pyhmc.egg-info
 libhymc.so
+main
