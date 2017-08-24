@@ -23,22 +23,23 @@ cdef extern from "hmc.hpp" namespace "hmc":
     vector[dvarray] heisenberg_model(
         dvarray &energy,
         dvarray &magnetisation,
-        const vector[size_t] dims,
+        const vector[int] dims,
         const HamiltonianOptions options,
         const double beta,
         const double leapfrog_eps,
-        const size_t nsamples,
-        const long initial_state_seed )
+        const int nsamples,
+        const int initial_state_seed )
 
 # Wrap function
 cpdef simulate(
-    J, H, KB, T, np.ndarray[double, ndim=1, mode='c'] dimensions,
-    nsamples, lf_eps, init_seed=1001):
+    double J, double H, double KB, double T,
+    long [:] dimensions,
+    int nsamples, double lf_eps, int init_seed=1001):
 
     cdef dvarray c_energy = dvarray(nsamples)
     cdef dvarray c_magnetisation = dvarray(nsamples)
 
-    cdef vector[size_t] c_dims
+    cdef vector[int] c_dims
     for dim in dimensions:
         c_dims.push_back( dim )
 
@@ -46,13 +47,15 @@ cpdef simulate(
     options.J = J
     options.H = H
     cdef double beta = 1.0 / (KB * T)
+    cdef double c_eps = lf_eps
+    cdef int c_samp = nsamples
+    cdef int c_seed = init_seed
 
     heisenberg_model( c_energy, c_magnetisation, c_dims, options, beta,
-                      lf_eps, nsamples, init_seed )
+                      c_eps, c_samp, c_seed )
 
     energy = np.array([c_energy[i] for i in range(nsamples)])
     magnetisation = np.array([c_magnetisation[i] for i in range(nsamples)])
-
 
     return {
         'energy': energy,

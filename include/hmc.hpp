@@ -37,7 +37,8 @@ namespace hmc {
         const size_t samples,
         const std::function<double(const std::valarray<double>&)> &f_energy,
         const std::function<void(std::valarray<double>&, const std::valarray<double>&)> &f_energy_grad,
-        const std::function<std::valarray<double>(const std::valarray<double>&)> &reduce );
+        const std::function<std::valarray<double>(const std::valarray<double>&)> &reduce
+    );
 
     std::vector<std::valarray<double> > nuts(
         std::valarray<double> &sample_energy,
@@ -94,12 +95,12 @@ namespace hmc {
     void heisenberg_model(
         std::valarray<double> &sample_energy,
         std::valarray<double> &sample_magnetisation,
-        const std::vector<size_t> system_dimensions,
+        const std::vector<int> system_dimensions,
         const HamiltonianOptions options,
         const double beta,
         const double leapfrog_eps,
-        const size_t nsamples,
-        const long initial_state_seed );
+        const int nsamples,
+        const int initial_state_seed );
 
     double magnetisation( const std::valarray<double>& state );
 }
