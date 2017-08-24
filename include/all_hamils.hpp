@@ -15,17 +15,9 @@ namespace hmc
     /// \mathbf{s}_i\f$ where \f$H =\f$ is actually the field strength
     /// multiplied by the moment of an atom.
     ///
-    /// \param trig_angles Vector of the trigonometric transformations of the
-    ///         angles of the spins ordered as:
-    ///         cos(theta): (asis, left(1d), up(2d), forward(3d)),
-    ///         sin(theta): (asis, left(1d), up(2d), forward(3d)),
-    ///         cos(phi): (asis, left(1d), up(2d), forward(3d)),
-    ///         sin(phi): (asis, left(1d), up(2d), forward(3d))
     /// \param H The field strength multiplied by the moment of an atom
     ///////////////////////////////////////////////////////////////////////////
-    double zeeman_energy(
-        const std::vector<std::valarray<double> >& trig_angles,
-        const double H);
+    double zeeman_energy(const double H);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Calculates the gradient of the zeeman energy of a system.
@@ -35,12 +27,6 @@ namespace hmc
     /// \mathbf{s}_i\f$ where \f$H =\f$ is actually the field strength
     /// multiplied by the moment of an atom.
     ///
-    /// \param trig_angles Vector of the trigonometric transformations of the
-    ///         angles of the spins ordered as:
-    ///         cos(theta): (asis, left(1d), right, up(2d), down, forward(3d)..),
-    ///         sin(theta): (asis, left(1d), right, up(2d), down, forward(3d)..),
-    ///         cos(phi): (asis, left(1d), right, up(2d), down, forward(3d)..),
-    ///         sin(phi): (asis, left(1d), right, up(2d), down, forward(3d)..)
     /// \param grad_out Reference to the valarray where the output gradient
     ///                 will be stored. The gradient is stored as the element
     ///                 wise derivitive of data.
@@ -48,7 +34,6 @@ namespace hmc
     ///////////////////////////////////////////////////////////////////////////
     void zeeman_grad(
         std::valarray<double>& grad_out,
-        const std::vector<std::valarray<double> >& trig_angles,
         const double H);
 
     ///////////////////////////////////////////////////////////////////////////
@@ -58,17 +43,10 @@ namespace hmc
     /// \mathbf{s}_i\cdot\mathbf{s}_j \f$ where \f$J_{ij} =\f$ -1 for
     /// neighbouring spins and 0 for other pairs.
     ///
-    /// \param trig_angles Vector of the trigonometric transformations of the
-    ///         angles of the spins ordered as:
-    ///         cos(theta): (asis, left(1d), up(2d), forward(3d)),
-    ///         sin(theta): (asis, left(1d), up(2d), forward(3d)),
-    ///         cos(phi): (asis, left(1d), up(2d), forward(3d)),
-    ///         sin(phi): (asis, left(1d), up(2d), forward(3d))
     /// \param J Exchange constant
     /// \param d Dimension of the lattice
     ///////////////////////////////////////////////////////////////////////////
     double exchange_energy(
-        const std::vector<std::valarray<double> >& trig_angles,
         const double J,
         const int d);
 
@@ -80,12 +58,6 @@ namespace hmc
     /// \f$\sum_{ij} J_{ij} \mathbf{s}_i\cdot\mathbf{s}_j \f$ where
     /// \f$J_{ij} =\f$ -1 for neighbouring spins and 0 for other pairs.
     ///
-    /// \param trig_angles Vector of the trigonometric transformations of the
-    ///         angles of the spins ordered as:
-    ///         cos(theta): (asis, left(1d), up(2d), forward(3d)),
-    ///         sin(theta): (asis, left(1d), up(2d), forward(3d)),
-    ///         cos(phi): (asis, left(1d), up(2d), forward(3d)),
-    ///         sin(phi): (asis, left(1d), up(2d), forward(3d))
     /// \param grad_out Reference to the valarray where the output gradient
     ///                 will be stored. The gradient is stored as the element
     ///                 wise derivitive of data.
@@ -94,7 +66,6 @@ namespace hmc
     ///////////////////////////////////////////////////////////////////////////
     void exchange_grad(
         std::valarray<double>& grad_out,
-        const std::vector<std::valarray<double> >& trig_angles,
         const double J,
         const int d);
 
@@ -110,11 +81,13 @@ namespace hmc
     ///                           the external field strength
     /// \param beta The relative temperature
     /// \param d The dimension of the lattice
+    /// \param size The size of the total data array
     ///////////////////////////////////////////////////////////////////////////
     std::function<double(const std::valarray<double>&)>gen_total_energy(
         const HamiltonianOptions options,
         const double beta,
-        const int d);
+        const int d,
+        const int size);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Generates the total gradient function for a system.
@@ -128,9 +101,28 @@ namespace hmc
     /// \param options A struct containing the Exchange constant and
     ///                           the external field strength
     /// \param d The dimension of the lattice
+    /// \param size The size of the total data array
     ///////////////////////////////////////////////////////////////////////////
     std::function<void(std::valarray<double>&, const std::valarray<double>&)>
-    gen_total_grad( const HamiltonianOptions options, const int d);
+    gen_total_grad(
+        const HamiltonianOptions options,
+        const int d,
+        const int size);
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Calculate the cos and sin of the angles
+    ///
+    /// \param data The valarray containing the angles
+    ///////////////////////////////////////////////////////////////////////////
+    void calc_trig(const std::valarray<double> &data);
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Sets the slices used for multiplying by neighbours
+    ///
+    /// \param size The total size of the input array
+    /// \param dim The number of dimensions being worked in
+    ///////////////////////////////////////////////////////////////////////////
+    void set_slices(int size, int dim);
 }
 
 #endif

@@ -243,37 +243,7 @@ TEST( hmc, nuts_sampling_normal_distribution )
 TEST( hmc, magnetisaton )
 {
     std::valarray<double> state = { 0.2, 0.2, 1.1, 1.1 };
-
+    hmc::set_slices(4, 1);
     EXPECT_DOUBLE_EQ( 2.0, hmc::magnetisation( state ) );
 }
-
-// TEST( hmc, hmc_sampling_univariate_distribution )
-// {
-//     // Sampling from a bivariate distribution
-//     // Taken from:
-//     // https://theclevermachine.wordpress.com/2012/11/18/mcmc-hamiltonian-monte-carlo-a-k-a-hybrid-monte-carlo/
-
-//     // Initial state
-//     double x_init[2] = {0, 0};
-
-//     // Parameters of the bivariate distribution
-//     double s1, s2, rho;
-//     s1 = s2 = 1.0;
-//     rho = 0.8;
-
-//     // Potential energy function
-//     std::function<double(const double*,const size_t)> energy =
-//         [s1,s2,rho] (const double*x, const size_t )
-//         {
-//             double x1 = x[0];
-//             double x2 = x[1];
-//             return (c2*x1*x1 - 2*rho*x1*x2 + s1*x2*x2) / (s1*s2 - rho*rho) / 2.0;
-//         }
-//     std::function<void(double*,const double*,const size_t)> energy_grad =
-//         []( double *grad, const double *x, const size_t )
-//         {
-//             grad[0] = (2*c2*x1 - 2*rho*x2) / (s1*s2 - rho*rho) / 2.0;
-//             grad[1] = (2*c1*x2 - 2*rho*x1) / (s1*s2 - rho*rho) / 2.0;
-//         }
-// }
 #endif

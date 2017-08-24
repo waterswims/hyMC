@@ -1,13 +1,12 @@
 const double pi = 3.141592653589793;
 
-// #include "mklrand_test.hpp"
 #include "mklrand_test.hpp"
 #include "1d_hamil_tests.hpp"
 #include "2d_hamil_tests.hpp"
 #include "3d_hamil_tests.hpp"
 #include "all_hamils_tests.hpp"
-#include "./leapfrog_test.hpp"
-#include "./hmc_test.hpp"
+#include "leapfrog_test.hpp"
+#include "hmc_test.hpp"
 #include "gtest/gtest.h"
 
 // Run all tests

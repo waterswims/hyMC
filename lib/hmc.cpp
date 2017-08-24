@@ -8,6 +8,15 @@
 #include <iostream>
 #define _USE_MATH_DEFINES
 
+namespace hmc
+{
+    extern int halfsize;
+    extern std::vector<std::gslice> large_slice, small_slice, opp_large_slice;
+    extern std::vector<std::gslice> opp_small_slice;
+    extern std::slice tslice, pslice;
+    extern std::valarray<double> temp, small_temp, cos_the, sin_the, cos_phi, sin_phi;
+}
+
 bool hmc::accept_trial( const double e, const double e_trial,
                          mklrand::mkl_drand &rng )
 {
@@ -33,7 +42,7 @@ std::vector<std::valarray<double> > hmc::hmc(
     const size_t samples,
     const std::function<double(const std::valarray<double>&)> &f_energy,
     const std::function<void(std::valarray<double>&, const std::valarray<double>&)> &f_energy_grad,
-    const std::function<std::valarray<double>(const std::valarray<double>&)> &reduce )
+    const std::function<std::valarray<double>(const std::valarray<double>&)> &reduce)
 {
     // system size
     size_t system_size = initial_state.size();
@@ -119,7 +128,7 @@ std::vector<std::valarray<double> > hmc::nuts(
     size_t system_size = initial_state.size();
 
     // max tree height
-    size_t max_tree_height = 15;
+    size_t max_tree_height = 30;
 
     // initialise vector of results
     std::vector<std::valarray<double> > trace;
@@ -281,12 +290,12 @@ void hmc::build_tree(
 void hmc::heisenberg_model(
     std::valarray<double> &sample_energy,
     std::valarray<double> &sample_magnetisation,
-    const std::vector<size_t> system_dimensions,
+    const std::vector<int> system_dimensions,
     const HamiltonianOptions options,
     const double beta,
     const double leapfrog_eps,
-    const size_t nsamples,
-    const long initial_state_seed )
+    const int nsamples,
+    const int initial_state_seed )
 {
     // Compute the size of the state vector
     // theta and phi for every element in system
@@ -298,13 +307,17 @@ void hmc::heisenberg_model(
     // Random initial state is controlled with the initial_state_seed
     std::valarray<double> initial_state( state_size );
     mklrand::mkl_drand rng( initial_state_seed );
-    for( unsigned int i=0; i<state_size; i++ )
-        initial_state[i] = rng.gen() * 2 * M_PI;
+    for( unsigned int i=0; i<state_size/2; i++ ){
+        double c_theta = rng.gen() * 2 - 1;
+        double phi = rng.gen() * 2 * M_PI;
+        initial_state[i] = acos(c_theta);
+        initial_state[i+state_size/2] = phi;
+    }
 
     // Get the Hamiltonian and gradient functions
     size_t ndim = system_dimensions.size();
-    auto energy_function = gen_total_energy( options, beta, ndim );
-    auto grad_function = gen_total_grad( options, ndim );
+    auto energy_function = gen_total_energy( options, beta, ndim, state_size );
+    auto grad_function = gen_total_grad( options, ndim, state_size );
 
     // Reduction to compute the magnetisation
     std::function<std::valarray<double>(const std::valarray<double>&)>
@@ -328,11 +341,9 @@ void hmc::heisenberg_model(
 
 double hmc::magnetisation( const std::valarray<double>& state )
 {
-    int halfsize = state.size() / 2;
-    std::slice tslice(0, halfsize, 1);
-    std::slice pslice(halfsize, halfsize, 1);
-    double x = ( cos( state[tslice] ) * sin( state[pslice] ) ).sum();
-    double y = ( sin( state[tslice] ) * sin( state[pslice] ) ).sum();
-    double z = cos( state[pslice] ).sum();
+    calc_trig(state);
+    double x = (cos_phi*sin_the).sum();
+    double y = (sin_phi*sin_the).sum();
+    double z = cos_the.sum();
     return std::sqrt( x*x + y*y + z*z );
 }
