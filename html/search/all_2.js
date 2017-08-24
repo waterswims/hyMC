@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_5fswap_5fptrs',['_swap_ptrs',['../d1/d2c/namespacehmc.html#aad5f236c40a3e261d90764bc0ee387e0',1,'hmc']]]
+  ['build_5ftree',['build_tree',['../d1/d2c/namespacehmc.html#a6b0ad9fcee4c305932929886aa69aad8',1,'hmc']]]
 ];

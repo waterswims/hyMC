@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['leapfrog',['leapfrog',['../d1/d07/namespaceleapfrog.html',1,'']]]
+  ['hmc',['hmc',['../d1/d2c/namespacehmc.html',1,'']]]
 ];

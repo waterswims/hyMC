@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['lfs',['lfs',['../d1/d07/namespaceleapfrog.html#a7f96bc1e60248a8fa32418df171ef65e',1,'leapfrog']]],
-  ['load',['load',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a37e1bfcc4835e09301d9bac95a446f20',1,'mklrand::mkl_randbase']]]
+  ['kinetic_5fenergy',['kinetic_energy',['../d1/d2c/namespacehmc.html#a5990bdd52f94ec79c22ac6fdc1f642f7',1,'hmc']]]
 ];

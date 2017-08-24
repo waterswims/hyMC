@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['save',['save',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a86c4b056e414a635cc12f6530f74f30c',1,'mklrand::mkl_randbase']]],
-  ['std_5fd_5funirand',['std_d_unirand',['../d5/dbe/classstdrand_1_1std__d__unirand.html#a17998b305c05b98f2d65fb68cb08514b',1,'stdrand::std_d_unirand']]],
-  ['std_5fnormrand',['std_normrand',['../d5/d23/classstdrand_1_1std__normrand.html#a2cb06e8547d4475a424d213cda700ad7',1,'stdrand::std_normrand']]],
-  ['std_5frandbase',['std_randbase',['../db/d79/classstdrand_1_1std__randbase.html#a8298d43186d6410f30ec0a77f0b90159',1,'stdrand::std_randbase']]],
-  ['step_5fstate',['step_state',['../d1/d07/namespaceleapfrog.html#a46478ac52554ea9122f5478f7e91484f',1,'leapfrog']]]
+  ['magnetisation',['magnetisation',['../d1/d2c/namespacehmc.html#af079ba3c33c2e5bc8f6b8a94965752ab',1,'hmc']]],
+  ['mkl_5fdrand',['mkl_drand',['../de/dcd/classmklrand_1_1mkl__drand.html#a2323c7fd79833d4e7920ec547625fe8b',1,'mklrand::mkl_drand']]],
+  ['mkl_5firand',['mkl_irand',['../d8/ded/classmklrand_1_1mkl__irand.html#a1f5cc9cb9269f9a24ee038aad3b64493',1,'mklrand::mkl_irand']]],
+  ['mkl_5flnrand',['mkl_lnrand',['../d0/d77/classmklrand_1_1mkl__lnrand.html#a39faf5aa38fae7ac1ef6e3f473ccf8a2',1,'mklrand::mkl_lnrand']]],
+  ['mkl_5fnrand',['mkl_nrand',['../d0/db9/classmklrand_1_1mkl__nrand.html#aa23d3c3132b1b6f2072cd3153ee05191',1,'mklrand::mkl_nrand']]],
+  ['mkl_5frandbase',['mkl_randbase',['../d2/d3b/classmklrand_1_1mkl__randbase.html#a83f8b1954a948117ae433d93ff986ff0',1,'mklrand::mkl_randbase']]]
 ];

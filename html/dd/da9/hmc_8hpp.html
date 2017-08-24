@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -97,6 +98,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;valarray&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;unordered_map&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for hmc.hpp:</div>
 <div class="dyncontent">
@@ -105,9 +107,22 @@ Include dependency graph for hmc.hpp:</div>
 <area shape="rect" id="node2" href="../../d6/d5a/mklrand_8hpp.html" title="./mklrand.hpp" alt="" coords="5,80,107,107"/>
 </map>
 </div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d29/hmc_8hpp__dep__incl.png" border="0" usemap="#include_2hmc_8hppdep" alt=""/></div>
+<map name="include_2hmc_8hppdep" id="include_2hmc_8hppdep">
+<area shape="rect" id="node2" href="../../d5/d0f/all__hamils_8hpp.html" title="include/all_hamils.hpp" alt="" coords="5,80,156,107"/>
+</map>
+</div>
 </div>
 <p><a href="../../dd/da9/hmc_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/da1/structhmc_1_1HamiltonianOptions.html">hmc::HamiltonianOptions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:d1/d2c/namespacehmc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html">hmc</a></td></tr>
@@ -124,6 +139,15 @@ Functions</h2></td></tr>
 <tr class="separator:a5990bdd52f94ec79c22ac6fdc1f642f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c40170597634e2a7370117003ea99fe"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::valarray&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#a9c40170597634e2a7370117003ea99fe">hmc::hmc</a> (std::valarray&lt; double &gt; &amp;sample_energy, const std::valarray&lt; double &gt; &amp;initial_state, const double leapfrog_eps, const size_t leapfrog_steps, const size_t samples, const std::function&lt; double(const std::valarray&lt; double &gt; &amp;)&gt; &amp;f_energy, const std::function&lt; void(std::valarray&lt; double &gt; &amp;, const std::valarray&lt; double &gt; &amp;)&gt; &amp;f_energy_grad, const std::function&lt; std::valarray&lt; double &gt;(const std::valarray&lt; double &gt; &amp;)&gt; &amp;reduce)</td></tr>
 <tr class="separator:a9c40170597634e2a7370117003ea99fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d7a1da33de9bcb924787662e5b0ee25"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::valarray&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#a2d7a1da33de9bcb924787662e5b0ee25">hmc::nuts</a> (std::valarray&lt; double &gt; &amp;sample_energy, const std::valarray&lt; double &gt; &amp;initial_state, const double leapfrog_eps, const size_t samples, const std::function&lt; double(const std::valarray&lt; double &gt; &amp;)&gt; &amp;f_energy, const std::function&lt; void(std::valarray&lt; double &gt; &amp;, const std::valarray&lt; double &gt; &amp;)&gt; &amp;f_energy_grad, const std::function&lt; std::valarray&lt; double &gt;(const std::valarray&lt; double &gt; &amp;)&gt; &amp;reduce)</td></tr>
+<tr class="separator:a2d7a1da33de9bcb924787662e5b0ee25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b0ad9fcee4c305932929886aa69aad8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#a6b0ad9fcee4c305932929886aa69aad8">hmc::build_tree</a> (std::valarray&lt; double &gt; &amp;in_state, std::valarray&lt; double &gt; &amp;in_vel, std::valarray&lt; double &gt; &amp;back_state, std::valarray&lt; double &gt; &amp;back_vel, std::valarray&lt; double &gt; &amp;for_state, std::valarray&lt; double &gt; &amp;for_vel, std::valarray&lt; double &gt; &amp;out_state, std::vector&lt; std::valarray&lt; double &gt; &gt; &amp;dud_state_tree, std::vector&lt; std::valarray&lt; double &gt; &gt; &amp;dud_vel_tree, std::vector&lt; std::valarray&lt; double &gt; &gt; &amp;pos_state_tree, const double slice, const int tree_height, const double eps, bool &amp;break_check, int &amp;n_check, const std::function&lt; void(std::valarray&lt; double &gt; &amp;, const std::valarray&lt; double &gt; &amp;)&gt; &amp;energy_grads, const std::function&lt; double(const std::valarray&lt; double &gt; &amp;, const std::valarray&lt; double &gt; &amp;)&gt; &amp;energy, std::valarray&lt; double &gt; &amp;work, <a class="el" href="../../de/dcd/classmklrand_1_1mkl__drand.html">mklrand::mkl_drand</a> &amp;rng)</td></tr>
+<tr class="memdesc:a6b0ad9fcee4c305932929886aa69aad8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds the sample tree for the NUTS.  <a href="../../d1/d2c/namespacehmc.html#a6b0ad9fcee4c305932929886aa69aad8">More...</a><br /></td></tr>
+<tr class="separator:a6b0ad9fcee4c305932929886aa69aad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c943e5dfdd62c30da7aa04711d90bb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#a4c943e5dfdd62c30da7aa04711d90bb1">hmc::heisenberg_model</a> (std::valarray&lt; double &gt; &amp;sample_energy, std::valarray&lt; double &gt; &amp;sample_magnetisation, const std::vector&lt; int &gt; system_dimensions, const HamiltonianOptions options, const double beta, const double leapfrog_eps, const int nsamples, const int initial_state_seed)</td></tr>
+<tr class="separator:a4c943e5dfdd62c30da7aa04711d90bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af079ba3c33c2e5bc8f6b8a94965752ab"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d2c/namespacehmc.html#af079ba3c33c2e5bc8f6b8a94965752ab">hmc::magnetisation</a> (const std::valarray&lt; double &gt; &amp;state)</td></tr>
+<tr class="separator:af079ba3c33c2e5bc8f6b8a94965752ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
